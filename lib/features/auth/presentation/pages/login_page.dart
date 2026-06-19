@@ -19,7 +19,7 @@ class LoginPage extends StatelessWidget {
         title: const Text('Login'),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios_new),
-          onPressed: () => context.pop(),
+          onPressed: () => context.canPop() ? context.pop() : null,
         ),
       ),
       body: const _LoginPageBody(),

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:food_app/core/routes/app_router.dart';
+import 'package:go_router/go_router.dart';
 import '../../../../core/theme/app_text_style.dart';
 import '../../data/models/food_model.dart';
 import 'meal_card.dart';
@@ -44,9 +46,8 @@ class HomeRecommendedMealsListView extends StatelessWidget {
                   padding: EdgeInsets.only(right: 16.w),
                   child: MealCard(
                     meal: meals[index],
-                    onTap: () {
-                      // TODO: Navigate to meal details
-                    },
+                    onTap: () => context.push(AppRoutes.foodDetails,
+                        extra: meals[index].id),
                   ),
                 );
               },

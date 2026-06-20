@@ -1,70 +1,81 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../data/models/settings_model.dart';
-import '../../data/models/user_profile_model.dart';
+import '../../data/models/address_model.dart';
 import '../../data/repositories/profile_repository.dart';
 import 'profile_state.dart';
 
+/// Cubit responsible for managing the user profile lifecycle and state transitions.
 class ProfileCubit extends Cubit<ProfileState> {
-  final ProfileRepository _repository;
+  final ProfileRepository _profileRepository;
 
-  ProfileCubit(this._repository) : super(const ProfileState()) {
-    loadProfileData();
-  }
+  ProfileCubit(this._profileRepository) : super(const ProfileState());
 
-  Future<void> loadProfileData() async {
+  /// Loads the user's profile details.
+  Future<void> loadProfile() async {
     emit(state.copyWith(status: ProfileStatus.loading));
-
-    final userResult = await _repository.getUserProfile();
-    final addressResult = await _repository.getAddresses();
-    final settingsResult = await _repository.getSettings();
-
-    userResult.fold(
-      (failure) => emit(state.copyWith(status: ProfileStatus.error, error: failure.message)),
-      (user) {
-        addressResult.fold(
-          (failure) => emit(state.copyWith(status: ProfileStatus.error, error: failure.message)),
-          (addresses) {
-            settingsResult.fold(
-              (failure) => emit(state.copyWith(status: ProfileStatus.error, error: failure.message)),
-              (settings) {
-                emit(state.copyWith(
-                  status: ProfileStatus.loaded,
-                  user: user,
-                  addresses: addresses,
-                  settings: settings,
-                ));
-              },
-            );
-          },
-        );
-      },
+    final result = await _profileRepository.getProfile();
+    result.fold(
+      (failure) => emit(state.copyWith(status: ProfileStatus.failure, error: failure.message)),
+      (profile) => emit(state.copyWith(status: ProfileStatus.success, profile: profile)),
     );
   }
 
-  Future<void> updateProfile(UserProfileModel updatedUser) async {
+  /// Updates the user's profile details.
+  Future<void> editProfile({
+    required String name,
+    required String email,
+    required String phone,
+    String? avatar,
+  }) async {
     emit(state.copyWith(status: ProfileStatus.loading));
-    final result = await _repository.updateProfile(updatedUser);
+    final result = await _profileRepository.updateProfile(
+      name: name,
+      email: email,
+      phone: phone,
+      avatar: avatar,
+    );
     result.fold(
-      (failure) => emit(state.copyWith(status: ProfileStatus.error, error: failure.message)),
-      (user) => emit(state.copyWith(status: ProfileStatus.updated, user: user)),
+      (failure) => emit(state.copyWith(status: ProfileStatus.failure, error: failure.message)),
+      (profile) => emit(state.copyWith(status: ProfileStatus.success, profile: profile)),
     );
   }
 
-  Future<void> updateSettings(SettingsModel newSettings) async {
+  /// Adds a new address to the profile.
+  Future<void> addAddress(AddressModel address) async {
     emit(state.copyWith(status: ProfileStatus.loading));
-    final result = await _repository.updateSettings(newSettings);
+    final result = await _profileRepository.addAddress(address);
     result.fold(
-      (failure) => emit(state.copyWith(status: ProfileStatus.error, error: failure.message)),
-      (_) => emit(state.copyWith(status: ProfileStatus.updated, settings: newSettings)),
+      (failure) => emit(state.copyWith(status: ProfileStatus.failure, error: failure.message)),
+      (profile) => emit(state.copyWith(status: ProfileStatus.success, profile: profile)),
     );
   }
 
-  Future<void> logout() async {
+  /// Updates an existing address.
+  Future<void> updateAddress(AddressModel address) async {
     emit(state.copyWith(status: ProfileStatus.loading));
-    final result = await _repository.logout();
+    final result = await _profileRepository.updateAddress(address);
     result.fold(
-      (failure) => emit(state.copyWith(status: ProfileStatus.error, error: failure.message)),
-      (_) => emit(const ProfileState(status: ProfileStatus.logoutSuccess)),
+      (failure) => emit(state.copyWith(status: ProfileStatus.failure, error: failure.message)),
+      (profile) => emit(state.copyWith(status: ProfileStatus.success, profile: profile)),
+    );
+  }
+
+  /// Deletes an address.
+  Future<void> deleteAddress(String addressId) async {
+    emit(state.copyWith(status: ProfileStatus.loading));
+    final result = await _profileRepository.deleteAddress(addressId);
+    result.fold(
+      (failure) => emit(state.copyWith(status: ProfileStatus.failure, error: failure.message)),
+      (profile) => emit(state.copyWith(status: ProfileStatus.success, profile: profile)),
+    );
+  }
+
+  /// Sets an address as the default address.
+  Future<void> setAsDefaultAddress(String addressId) async {
+    emit(state.copyWith(status: ProfileStatus.loading));
+    final result = await _profileRepository.setAsDefaultAddress(addressId);
+    result.fold(
+      (failure) => emit(state.copyWith(status: ProfileStatus.failure, error: failure.message)),
+      (profile) => emit(state.copyWith(status: ProfileStatus.success, profile: profile)),
     );
   }
 }

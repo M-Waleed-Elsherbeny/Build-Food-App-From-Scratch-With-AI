@@ -13,7 +13,7 @@ class FakeFoodDetailsRepository implements FoodDetailsRepository {
       
       return Right(MockFoodData.getFakeFood());
     } catch (e) {
-      return Left(ServerFailure('Failed to fetch food details'));
+      return const Left(ServerFailure('Failed to fetch food details'));
     }
   }
 }

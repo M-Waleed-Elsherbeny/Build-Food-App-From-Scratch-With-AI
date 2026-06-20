@@ -1,10 +1,12 @@
-class CustomizationModel {
+import 'package:equatable/equatable.dart';
+
+class CustomizationModel extends Equatable {
   final String id;
   final String title;
   final List<String> options;
   final bool isRequired;
 
-  CustomizationModel({
+  const CustomizationModel({
     required this.id,
     required this.title,
     required this.options,
@@ -42,4 +44,7 @@ class CustomizationModel {
       isRequired: isRequired ?? this.isRequired,
     );
   }
+
+  @override
+  List<Object?> get props => [id, title, options, isRequired];
 }

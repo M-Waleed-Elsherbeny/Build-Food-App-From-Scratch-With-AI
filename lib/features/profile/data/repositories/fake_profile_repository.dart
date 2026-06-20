@@ -1,105 +1,118 @@
 import 'package:dartz/dartz.dart';
 import '../../../../core/errors/failures.dart';
-import '../mock/mock_profile_data.dart';
+import '../models/profile_model.dart';
 import '../models/address_model.dart';
-import '../models/settings_model.dart';
-import '../models/user_profile_model.dart';
 import 'profile_repository.dart';
 
+/// Fake implementation of [ProfileRepository] for local demo/testing.
 class FakeProfileRepository implements ProfileRepository {
-  UserProfileModel _currentUser = MockProfileData.userProfile;
-  List<AddressModel> _addresses = List.from(MockProfileData.addresses);
-  SettingsModel _settings = MockProfileData.settings;
+  ProfileModel _profile = ProfileModel.mock();
 
   Future<void> _delay() async {
-    await Future.delayed(const Duration(milliseconds: 800));
+    await Future.delayed(const Duration(milliseconds: 600));
   }
 
   @override
-  Future<Either<Failure, UserProfileModel>> getUserProfile() async {
+  Future<Either<Failure, ProfileModel>> getProfile() async {
     try {
       await _delay();
-      return Right(_currentUser);
+      return Right(_profile);
     } catch (e) {
       return Left(ServerFailure(e.toString()));
     }
   }
 
   @override
-  Future<Either<Failure, UserProfileModel>> updateProfile(UserProfileModel profile) async {
+  Future<Either<Failure, ProfileModel>> updateProfile({
+    required String name,
+    required String email,
+    required String phone,
+    String? avatar,
+  }) async {
     try {
       await _delay();
-      _currentUser = profile;
-      return Right(_currentUser);
+      _profile = _profile.copyWith(
+        name: name,
+        email: email,
+        phone: phone,
+        avatar: avatar ?? _profile.avatar,
+      );
+      return Right(_profile);
     } catch (e) {
       return Left(ServerFailure(e.toString()));
     }
   }
 
   @override
-  Future<Either<Failure, List<AddressModel>>> getAddresses() async {
+  Future<Either<Failure, ProfileModel>> addAddress(AddressModel address) async {
     try {
       await _delay();
-      return Right(_addresses);
-    } catch (e) {
-      return Left(ServerFailure(e.toString()));
-    }
-  }
-
-  @override
-  Future<Either<Failure, void>> saveAddress(AddressModel address) async {
-    try {
-      await _delay();
-      final index = _addresses.indexWhere((a) => a.id == address.id);
-      if (index >= 0) {
-        _addresses[index] = address;
-      } else {
-        _addresses.add(address);
+      List<AddressModel> updatedAddresses = List.from(_profile.addresses);
+      
+      // If the new address is marked default, unset other defaults
+      if (address.isDefault) {
+        updatedAddresses = updatedAddresses.map((e) => e.copyWith(isDefault: false)).toList();
       }
-      return const Right(null);
+      
+      updatedAddresses.add(address);
+      _profile = _profile.copyWith(addresses: updatedAddresses);
+      return Right(_profile);
     } catch (e) {
       return Left(ServerFailure(e.toString()));
     }
   }
 
   @override
-  Future<Either<Failure, void>> deleteAddress(String id) async {
+  Future<Either<Failure, ProfileModel>> updateAddress(AddressModel address) async {
     try {
       await _delay();
-      _addresses.removeWhere((a) => a.id == id);
-      return const Right(null);
+      List<AddressModel> updatedAddresses = _profile.addresses.map((e) {
+        if (e.id == address.id) {
+          return address;
+        }
+        if (address.isDefault && e.isDefault) {
+          // If we updated an address to be default, unset default on other addresses
+          return e.copyWith(isDefault: false);
+        }
+        return e;
+      }).toList();
+
+      _profile = _profile.copyWith(addresses: updatedAddresses);
+      return Right(_profile);
     } catch (e) {
       return Left(ServerFailure(e.toString()));
     }
   }
 
   @override
-  Future<Either<Failure, SettingsModel>> getSettings() async {
+  Future<Either<Failure, ProfileModel>> deleteAddress(String addressId) async {
     try {
       await _delay();
-      return Right(_settings);
+      List<AddressModel> updatedAddresses = _profile.addresses.where((e) => e.id != addressId).toList();
+      
+      // If the deleted address was default, make the first remaining address default (if any)
+      final deletedWasDefault = _profile.addresses.firstWhere((e) => e.id == addressId, orElse: () => const AddressModel(id: '', title: '', addressLine: '')).isDefault;
+      if (deletedWasDefault && updatedAddresses.isNotEmpty) {
+        updatedAddresses[0] = updatedAddresses[0].copyWith(isDefault: true);
+      }
+
+      _profile = _profile.copyWith(addresses: updatedAddresses);
+      return Right(_profile);
     } catch (e) {
       return Left(ServerFailure(e.toString()));
     }
   }
 
   @override
-  Future<Either<Failure, void>> updateSettings(SettingsModel settings) async {
+  Future<Either<Failure, ProfileModel>> setAsDefaultAddress(String addressId) async {
     try {
       await _delay();
-      _settings = settings;
-      return const Right(null);
-    } catch (e) {
-      return Left(ServerFailure(e.toString()));
-    }
-  }
+      List<AddressModel> updatedAddresses = _profile.addresses.map((e) {
+        return e.copyWith(isDefault: e.id == addressId);
+      }).toList();
 
-  @override
-  Future<Either<Failure, void>> logout() async {
-    try {
-      await _delay();
-      // Reset local fake data if needed
-      return const Right(null);
+      _profile = _profile.copyWith(addresses: updatedAddresses);
+      return Right(_profile);
     } catch (e) {
       return Left(ServerFailure(e.toString()));
     }

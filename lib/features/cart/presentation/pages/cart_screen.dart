@@ -35,7 +35,7 @@ class CartScreen extends StatelessWidget {
               ? AppTextStyle.font18WhiteSemiBold
               : AppTextStyle.font18Grey900SemiBold,
         ),
-        leading: SizedBox(),
+        leading: const SizedBox(),
       ),
       body: BlocConsumer<CartCubit, CartState>(
         listener: (context, state) {

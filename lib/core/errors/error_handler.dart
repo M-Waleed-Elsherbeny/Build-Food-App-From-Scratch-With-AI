@@ -47,7 +47,7 @@ class ErrorHandler {
     } else if (statusCode == 401 || statusCode == 403) {
       return ServerFailure(message); // Could create AuthFailure for this
     } else if (statusCode == 404) {
-      return ServerFailure('Resource not found');
+      return const ServerFailure('Resource not found');
     } else if (statusCode != null && statusCode >= 500) {
       return const ServerFailure('Internal server error. Please try again later.');
     }

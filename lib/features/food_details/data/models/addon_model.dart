@@ -1,9 +1,11 @@
-class AddonModel {
+import 'package:equatable/equatable.dart';
+
+class AddonModel extends Equatable {
   final String id;
   final String name;
   final double price;
 
-  AddonModel({
+  const AddonModel({
     required this.id,
     required this.name,
     required this.price,
@@ -36,4 +38,8 @@ class AddonModel {
       price: price ?? this.price,
     );
   }
+
+  @override
+  List<Object?> get props => [id, name, price];
 }
+

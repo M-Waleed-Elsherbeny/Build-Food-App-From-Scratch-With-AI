@@ -6,7 +6,7 @@ import '../models/coupon_model.dart';
 import 'cart_repository.dart';
 
 class FakeCartRepository implements CartRepository {
-  List<CartItemModel> _localCart = List.from(MockCartData.initialCartItems);
+  final List<CartItemModel> _localCart = List.from(MockCartData.initialCartItems);
 
   @override
   Future<Either<Failure, List<CartItemModel>>> getCartItems() async {
@@ -19,13 +19,15 @@ class FakeCartRepository implements CartRepository {
   }
 
   @override
-  Future<Either<Failure, List<CartItemModel>>> addItemToCart(CartItemModel item) async {
+  Future<Either<Failure, List<CartItemModel>>> addItemToCart(
+      CartItemModel item) async {
     try {
       await Future.delayed(const Duration(milliseconds: 600));
       final index = _localCart.indexWhere((element) => element.id == item.id);
       if (index >= 0) {
         final existingItem = _localCart[index];
-        _localCart[index] = existingItem.copyWith(quantity: existingItem.quantity + item.quantity);
+        _localCart[index] = existingItem.copyWith(
+            quantity: existingItem.quantity + item.quantity);
       } else {
         _localCart.add(item);
       }
@@ -36,7 +38,8 @@ class FakeCartRepository implements CartRepository {
   }
 
   @override
-  Future<Either<Failure, List<CartItemModel>>> removeItemFromCart(String itemId) async {
+  Future<Either<Failure, List<CartItemModel>>> removeItemFromCart(
+      String itemId) async {
     try {
       await Future.delayed(const Duration(milliseconds: 500));
       _localCart.removeWhere((element) => element.id == itemId);
@@ -47,7 +50,8 @@ class FakeCartRepository implements CartRepository {
   }
 
   @override
-  Future<Either<Failure, List<CartItemModel>>> updateItemQuantity(String itemId, int newQuantity) async {
+  Future<Either<Failure, List<CartItemModel>>> updateItemQuantity(
+      String itemId, int newQuantity) async {
     try {
       await Future.delayed(const Duration(milliseconds: 300));
       final index = _localCart.indexWhere((element) => element.id == itemId);
@@ -71,7 +75,7 @@ class FakeCartRepository implements CartRepository {
       final index = MockCartData.validCoupons.indexWhere(
         (element) => element.code.toUpperCase() == code.toUpperCase(),
       );
-      
+
       if (index >= 0) {
         return Right(MockCartData.validCoupons[index]);
       } else {

@@ -1,7 +1,8 @@
 import 'package:food_app/features/food_details/data/models/addon_model.dart';
 import 'package:food_app/features/food_details/data/models/customization_model.dart';
+import 'package:equatable/equatable.dart';
 
-class FoodDetailsModel {
+class FoodDetailsModel extends Equatable {
   final String id;
   final String name;
   final String image;
@@ -16,7 +17,7 @@ class FoodDetailsModel {
   final List<AddonModel> addons;
   final List<CustomizationModel> customizations;
 
-  FoodDetailsModel({
+  const FoodDetailsModel({
     required this.id,
     required this.name,
     required this.image,
@@ -56,23 +57,21 @@ class FoodDetailsModel {
     );
   }
 
-  Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'name': name,
-      'image': image,
-      'basePrice': basePrice,
-      'description': description,
-      'rating': rating,
-      'reviewsCount': reviewsCount,
-      'restaurantId': restaurantId,
-      'restaurantName': restaurantName,
-      'deliveryTimeMin': deliveryTimeMin,
-      'deliveryTimeMax': deliveryTimeMax,
-      'addons': addons.map((e) => e.toJson()).toList(),
-      'customizations': customizations.map((e) => e.toJson()).toList(),
-    };
-  }
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'name': name,
+        'image': image,
+        'basePrice': basePrice,
+        'description': description,
+        'rating': rating,
+        'reviewsCount': reviewsCount,
+        'restaurantId': restaurantId,
+        'restaurantName': restaurantName,
+        'deliveryTimeMin': deliveryTimeMin,
+        'deliveryTimeMax': deliveryTimeMax,
+        'addons': addons.map((e) => e.toJson()).toList(),
+        'customizations': customizations.map((e) => e.toJson()).toList(),
+      };
 
   FoodDetailsModel copyWith({
     String? id,
@@ -107,7 +106,7 @@ class FoodDetailsModel {
   }
 
   factory FoodDetailsModel.fake() {
-    return FoodDetailsModel(
+    return const FoodDetailsModel(
       id: '0',
       name: 'Food Name Placeholder',
       image: '',
@@ -123,4 +122,21 @@ class FoodDetailsModel {
       customizations: [],
     );
   }
+
+  @override
+  List<Object?> get props => [
+        id,
+        name,
+        image,
+        basePrice,
+        description,
+        rating,
+        reviewsCount,
+        restaurantId,
+        restaurantName,
+        deliveryTimeMin,
+        deliveryTimeMax,
+        addons,
+        customizations,
+      ];
 }

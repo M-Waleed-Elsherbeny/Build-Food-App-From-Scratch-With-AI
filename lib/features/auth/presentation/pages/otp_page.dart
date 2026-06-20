@@ -97,7 +97,7 @@ class _OtpPageState extends State<OtpPage> {
                           contentPadding: EdgeInsets.zero,
                           enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(15.r),
-                            borderSide: BorderSide(color: ColorsManager.grey200, width: 2),
+                            borderSide: const BorderSide(color: ColorsManager.grey200, width: 2),
                           ),
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(15.r),

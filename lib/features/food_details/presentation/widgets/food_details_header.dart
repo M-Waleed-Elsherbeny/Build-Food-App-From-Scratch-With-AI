@@ -5,8 +5,15 @@ import 'package:food_app/core/theme/colors_manager.dart';
 
 class FoodDetailsHeader extends StatelessWidget {
   final String imageUrl;
+  final bool isFavorite;
+  final VoidCallback onFavoriteToggle;
 
-  const FoodDetailsHeader({Key? key, required this.imageUrl}) : super(key: key);
+  const FoodDetailsHeader({
+    super.key,
+    required this.imageUrl,
+    required this.isFavorite,
+    required this.onFavoriteToggle,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -45,10 +52,11 @@ class FoodDetailsHeader extends StatelessWidget {
           child: CircleAvatar(
             backgroundColor: ColorsManager.white,
             child: IconButton(
-              icon: const Icon(Icons.favorite_border, color: ColorsManager.primary),
-              onPressed: () {
-                // TODO: Implement favorites logic
-              },
+              icon: Icon(
+                isFavorite ? Icons.favorite : Icons.favorite_border,
+                color: ColorsManager.primary,
+              ),
+              onPressed: onFavoriteToggle,
             ),
           ),
         ),

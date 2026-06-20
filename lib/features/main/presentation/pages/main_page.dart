@@ -4,8 +4,8 @@ import 'package:food_app/core/di/injection.dart';
 import 'package:food_app/features/cart/presentation/pages/cart_screen.dart';
 import 'package:food_app/features/cart/presentation/cubit/cart_cubit.dart';
 import 'package:food_app/features/home/presentation/pages/home_page.dart';
-import 'package:food_app/features/profile/presentation/pages/profile_screen.dart';
 import 'package:food_app/features/profile/presentation/cubit/profile_cubit.dart';
+import 'package:food_app/features/profile/presentation/pages/profile_screen.dart';
 import '../widgets/custom_bottom_nav_bar.dart';
 
 class MainPage extends StatefulWidget {

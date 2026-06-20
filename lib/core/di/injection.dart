@@ -19,15 +19,18 @@ import '../../features/restaurant_details/presentation/cubit/restaurant_details_
 import '../../features/search/data/repositories/search_repository.dart';
 import '../../features/search/data/repositories/fake_search_repository.dart';
 import '../../features/search/presentation/cubit/search_cubit.dart';
-import '../../features/profile/data/repositories/profile_repository.dart';
-import '../../features/profile/data/repositories/fake_profile_repository.dart';
-import '../../features/profile/presentation/cubit/profile_cubit.dart';
 import '../../features/settings/data/repositories/settings_repository.dart';
 import '../../features/settings/data/repositories/fake_settings_repository.dart';
 import '../../features/settings/presentation/cubit/settings_cubit.dart';
 import '../../features/cart/data/repositories/cart_repository.dart';
 import '../../features/cart/data/repositories/fake_cart_repository.dart';
 import '../../features/cart/presentation/cubit/cart_cubit.dart';
+import '../../features/profile/data/repositories/profile_repository.dart';
+import '../../features/profile/data/repositories/fake_profile_repository.dart';
+import '../../features/profile/presentation/cubit/profile_cubit.dart';
+import '../../features/food_details/data/repositories/food_details_repository.dart';
+import '../../features/food_details/data/repositories/fake_food_details_repository.dart';
+import '../../features/food_details/presentation/cubit/food_details_cubit.dart';
 
 final GetIt getIt = GetIt.instance;
 
@@ -107,6 +110,12 @@ Future<void> configureDependencies() async {
     () => FakeProfileRepository(),
   );
   getIt.registerFactory(() => ProfileCubit(getIt()));
+
+  // --- Food Details Feature ---
+  getIt.registerLazySingleton<FoodDetailsRepository>(
+    () => FakeFoodDetailsRepository(),
+  );
+  getIt.registerFactory(() => FoodDetailsCubit(getIt(), getIt()));
 
   // --- Settings Feature ---
   getIt.registerLazySingleton<SettingsRepository>(

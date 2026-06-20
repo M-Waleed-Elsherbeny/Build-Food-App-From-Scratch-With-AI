@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:food_app/core/routes/app_router.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../core/theme/colors_manager.dart';
 import '../../../../core/theme/app_text_style.dart';
@@ -14,7 +15,8 @@ class CartEmptyView extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(Icons.shopping_cart_outlined, size: 80.sp, color: ColorsManager.grey300),
+          Icon(Icons.shopping_cart_outlined,
+              size: 80.sp, color: ColorsManager.grey300),
           SizedBox(height: 16.h),
           Text(
             'Your cart is empty',
@@ -31,7 +33,7 @@ class CartEmptyView extends StatelessWidget {
             width: 200.w,
             child: PrimaryButton(
               text: 'Start Shopping',
-              onPressed: () => context.pop(),
+              onPressed: () => context.pushReplacement(AppRoutes.main),
             ),
           )
         ],

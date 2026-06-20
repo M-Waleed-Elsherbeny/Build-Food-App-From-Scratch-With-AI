@@ -2,7 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:food_app/features/food_details/data/models/addon_model.dart';
 import 'package:food_app/features/food_details/data/models/food_details_model.dart';
 
-enum FoodDetailsStatus { initial, loading, success, failure }
+enum FoodDetailsStatus { initial, loading, success, failure, addToCartSuccess }
 
 class FoodDetailsState extends Equatable {
   final FoodDetailsStatus status;
@@ -11,6 +11,7 @@ class FoodDetailsState extends Equatable {
   final int quantity;
   final List<AddonModel> selectedAddons;
   final Map<String, String> selectedCustomizations;
+  final bool isFavorite;
 
   const FoodDetailsState({
     this.status = FoodDetailsStatus.initial,
@@ -19,6 +20,7 @@ class FoodDetailsState extends Equatable {
     this.quantity = 1,
     this.selectedAddons = const [],
     this.selectedCustomizations = const {},
+    this.isFavorite = false,
   });
 
   double get totalPrice {
@@ -34,6 +36,7 @@ class FoodDetailsState extends Equatable {
     int? quantity,
     List<AddonModel>? selectedAddons,
     Map<String, String>? selectedCustomizations,
+    bool? isFavorite,
   }) {
     return FoodDetailsState(
       status: status ?? this.status,
@@ -42,6 +45,7 @@ class FoodDetailsState extends Equatable {
       quantity: quantity ?? this.quantity,
       selectedAddons: selectedAddons ?? this.selectedAddons,
       selectedCustomizations: selectedCustomizations ?? this.selectedCustomizations,
+      isFavorite: isFavorite ?? this.isFavorite,
     );
   }
 
@@ -53,5 +57,6 @@ class FoodDetailsState extends Equatable {
         quantity,
         selectedAddons,
         selectedCustomizations,
+        isFavorite,
       ];
 }

@@ -23,6 +23,8 @@ import '../../features/settings/presentation/pages/settings_screen.dart';
 import '../../features/settings/presentation/cubit/settings_cubit.dart';
 import '../../features/cart/presentation/pages/cart_screen.dart';
 import '../../features/cart/presentation/cubit/cart_cubit.dart';
+import '../../features/profile/presentation/cubit/profile_cubit.dart';
+import '../../features/profile/presentation/pages/manage_addresses_screen.dart';
 
 abstract class AppRoutes {
   static const String splash = '/';
@@ -40,6 +42,7 @@ abstract class AppRoutes {
   static const String settings = '/settings';
   static const String cart = '/cart';
   static const String foodDetails = '/food-details';
+  static const String manageAddresses = '/manage-addresses';
 }
 
 class AppRouter {
@@ -140,6 +143,13 @@ class AppRouter {
         builder: (context, state) => BlocProvider(
           create: (context) => getIt<CartCubit>()..getCartItems(),
           child: const CartScreen(),
+        ),
+      ),
+      GoRoute(
+        path: AppRoutes.manageAddresses,
+        builder: (context, state) => BlocProvider(
+          create: (context) => getIt<ProfileCubit>(),
+          child: const ManageAddressesScreen(),
         ),
       ),
     ],

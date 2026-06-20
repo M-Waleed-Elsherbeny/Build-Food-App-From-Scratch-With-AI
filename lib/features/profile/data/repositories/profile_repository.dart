@@ -1,19 +1,30 @@
 import 'package:dartz/dartz.dart';
 import '../../../../core/errors/failures.dart';
+import '../models/profile_model.dart';
 import '../models/address_model.dart';
-import '../models/settings_model.dart';
-import '../models/user_profile_model.dart';
 
+/// Repository interface for profile operations.
 abstract class ProfileRepository {
-  Future<Either<Failure, UserProfileModel>> getUserProfile();
-  Future<Either<Failure, UserProfileModel>> updateProfile(UserProfileModel profile);
-  
-  Future<Either<Failure, List<AddressModel>>> getAddresses();
-  Future<Either<Failure, void>> saveAddress(AddressModel address);
-  Future<Either<Failure, void>> deleteAddress(String id);
-  
-  Future<Either<Failure, SettingsModel>> getSettings();
-  Future<Either<Failure, void>> updateSettings(SettingsModel settings);
-  
-  Future<Either<Failure, void>> logout();
+  /// Fetches the user's profile details.
+  Future<Either<Failure, ProfileModel>> getProfile();
+
+  /// Updates the user's profile information.
+  Future<Either<Failure, ProfileModel>> updateProfile({
+    required String name,
+    required String email,
+    required String phone,
+    String? avatar,
+  });
+
+  /// Adds a new address to the user's profile.
+  Future<Either<Failure, ProfileModel>> addAddress(AddressModel address);
+
+  /// Updates an existing address in the user's profile.
+  Future<Either<Failure, ProfileModel>> updateAddress(AddressModel address);
+
+  /// Deletes an address by its ID from the user's profile.
+  Future<Either<Failure, ProfileModel>> deleteAddress(String addressId);
+
+  /// Sets the specified address as default.
+  Future<Either<Failure, ProfileModel>> setAsDefaultAddress(String addressId);
 }

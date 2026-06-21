@@ -34,6 +34,12 @@ class AppTextStyle {
     fontWeight: FontWeight.normal,
   );
 
+  static TextStyle font14Grey600Bold = GoogleFonts.inter(
+    color: ColorsManager.grey600,
+    fontSize: 14.sp,
+    fontWeight: FontWeight.bold,
+  );
+
   static TextStyle font12Grey500Regular = GoogleFonts.inter(
     color: ColorsManager.grey500,
     fontSize: 12.sp,
@@ -95,12 +101,6 @@ class AppTextStyle {
 
   static TextStyle font14PrimaryBold = GoogleFonts.inter(
     color: ColorsManager.primary,
-    fontSize: 14.sp,
-    fontWeight: FontWeight.bold,
-  );
-
-  static TextStyle font14Grey600Bold = GoogleFonts.inter(
-    color: ColorsManager.grey600,
     fontSize: 14.sp,
     fontWeight: FontWeight.bold,
   );

@@ -25,6 +25,9 @@ import '../../features/cart/presentation/pages/cart_screen.dart';
 import '../../features/cart/presentation/cubit/cart_cubit.dart';
 import '../../features/profile/presentation/cubit/profile_cubit.dart';
 import '../../features/profile/presentation/pages/manage_addresses_screen.dart';
+import '../../features/order_tracking/presentation/cubit/order_tracking_cubit.dart';
+import '../../features/order_tracking/presentation/screens/order_tracking_screen.dart';
+import '../../features/order_tracking/data/repositories/fake_order_tracking_repository.dart';
 
 abstract class AppRoutes {
   static const String splash = '/';
@@ -43,6 +46,7 @@ abstract class AppRoutes {
   static const String cart = '/cart';
   static const String foodDetails = '/food-details';
   static const String manageAddresses = '/manage-addresses';
+  static const String orderTracking = '/order-tracking';
 }
 
 class AppRouter {
@@ -151,6 +155,16 @@ class AppRouter {
           create: (context) => getIt<ProfileCubit>(),
           child: const ManageAddressesScreen(),
         ),
+      ),
+      GoRoute(
+        path: AppRoutes.orderTracking,
+        builder: (context, state) {
+          final orderId = state.extra as String? ?? 'FG-48291';
+          return BlocProvider(
+            create: (context) => OrderTrackingCubit(FakeOrderTrackingRepository()),
+            child: OrderTrackingScreen(orderId: orderId),
+          );
+        },
       ),
     ],
   );

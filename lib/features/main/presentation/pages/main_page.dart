@@ -6,6 +6,10 @@ import 'package:food_app/features/cart/presentation/cubit/cart_cubit.dart';
 import 'package:food_app/features/home/presentation/pages/home_page.dart';
 import 'package:food_app/features/profile/presentation/cubit/profile_cubit.dart';
 import 'package:food_app/features/profile/presentation/pages/profile_screen.dart';
+import 'package:food_app/features/favorites/presentation/cubit/favorites_cubit.dart';
+import 'package:food_app/features/favorites/presentation/screens/favorites_screen.dart';
+import 'package:food_app/features/order_history/presentation/cubit/order_history_cubit.dart';
+import 'package:food_app/features/order_history/presentation/screens/order_history_screen.dart';
 import '../widgets/custom_bottom_nav_bar.dart';
 
 class MainPage extends StatefulWidget {
@@ -30,12 +34,24 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     final List<Widget> pages = [
+      // 0 - Home
       HomePage(onScrollDirectionChanged: _onScrollDirectionChanged),
-      const Center(child: Text('Orders')),
+      // 1 - Favorites
+      BlocProvider(
+        create: (context) => getIt<FavoritesCubit>(),
+        child: const FavoritesScreen(),
+      ),
+      // 2 - Orders
+      BlocProvider(
+        create: (context) => getIt<OrderHistoryCubit>(),
+        child: const OrderHistoryScreen(),
+      ),
+      // 3 - Cart
       BlocProvider(
         create: (context) => getIt<CartCubit>()..getCartItems(),
         child: const CartScreen(),
       ),
+      // 4 - Profile
       BlocProvider(
         create: (context) => getIt<ProfileCubit>(),
         child: const ProfileScreen(),

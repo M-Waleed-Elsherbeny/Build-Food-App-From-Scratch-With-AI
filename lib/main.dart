@@ -14,12 +14,15 @@ import 'features/settings/presentation/cubit/settings_state.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
-  
+
   // Load environment variables
   await dotenv.load();
 
   // Initialize Dependency Injection
   await configureDependencies();
+
+  // final SharedPreferences _prefs = getIt<SharedPreferences>();
+  // await _prefs.remove("user_favorites_key");
 
   runApp(
     EasyLocalization(
@@ -48,10 +51,11 @@ class FoodieGoApp extends StatelessWidget {
             BlocProvider(create: (context) => getIt<SettingsCubit>()),
           ],
           child: BlocBuilder<SettingsCubit, SettingsState>(
-            buildWhen: (previous, current) => previous.settings?.isDarkMode != current.settings?.isDarkMode,
+            buildWhen: (previous, current) =>
+                previous.settings?.isDarkMode != current.settings?.isDarkMode,
             builder: (context, state) {
               final isDarkMode = state.settings?.isDarkMode ?? false;
-              
+
               return MaterialApp.router(
                 title: AppConstants.appName,
                 debugShowCheckedModeBanner: false,

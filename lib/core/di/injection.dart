@@ -31,6 +31,15 @@ import '../../features/profile/presentation/cubit/profile_cubit.dart';
 import '../../features/food_details/data/repositories/food_details_repository.dart';
 import '../../features/food_details/data/repositories/fake_food_details_repository.dart';
 import '../../features/food_details/presentation/cubit/food_details_cubit.dart';
+import '../../features/favorites/data/repositories/favorites_repository.dart';
+import '../../features/favorites/data/repositories/fake_favorites_repository.dart';
+import '../../features/favorites/presentation/cubit/favorites_cubit.dart';
+import '../../features/order_tracking/data/repositories/order_tracking_repository.dart';
+import '../../features/order_tracking/data/repositories/fake_order_tracking_repository.dart';
+import '../../features/order_tracking/presentation/cubit/order_tracking_cubit.dart';
+import '../../features/order_history/data/repositories/order_history_repository.dart';
+import '../../features/order_history/data/repositories/fake_order_history_repository.dart';
+import '../../features/order_history/presentation/cubit/order_history_cubit.dart';
 
 final GetIt getIt = GetIt.instance;
 
@@ -129,5 +138,23 @@ Future<void> configureDependencies() async {
     // () => RemoteCartRepository(getIt()),
   );
   getIt.registerFactory(() => CartCubit(getIt()));
+
+  // --- Favorites Feature ---
+  getIt.registerLazySingleton<FavoritesRepository>(
+    () => FakeFavoritesRepository(getIt()),
+  );
+  getIt.registerFactory(() => FavoritesCubit(getIt()));
+
+  // --- Order Tracking Feature ---
+  getIt.registerLazySingleton<OrderTrackingRepository>(
+    () => FakeOrderTrackingRepository(),
+  );
+  getIt.registerFactory(() => OrderTrackingCubit(getIt()));
+
+  // --- Order History Feature ---
+  getIt.registerLazySingleton<OrderHistoryRepository>(
+    () => FakeOrderHistoryRepository(),
+  );
+  getIt.registerFactory(() => OrderHistoryCubit(getIt()));
 }
 

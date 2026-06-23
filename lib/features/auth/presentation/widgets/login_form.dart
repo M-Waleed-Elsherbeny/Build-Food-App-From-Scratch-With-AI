@@ -114,7 +114,9 @@ class _LoginFormState extends State<LoginForm> {
               ),
             ],
           ),
-          const Spacer(),
+          SizedBox(
+            height: 40.h,
+          ),
           BlocBuilder<AuthCubit, AuthState>(
             builder: (context, state) {
               return PrimaryButton(
@@ -132,9 +134,9 @@ class _LoginFormState extends State<LoginForm> {
   void _onLoginPressed() {
     if (_formKey.currentState!.validate()) {
       context.read<AuthCubit>().login(
-        _emailController.text.trim(),
-        _passwordController.text.trim(),
-      );
+            _emailController.text.trim(),
+            _passwordController.text.trim(),
+          );
     }
   }
 }

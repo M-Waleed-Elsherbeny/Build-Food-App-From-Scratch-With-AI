@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'core/di/injection.dart';
 import 'core/routes/app_router.dart';
 import 'core/theme/app_theme.dart';
@@ -13,10 +14,18 @@ import 'features/settings/presentation/cubit/settings_state.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  // Initialize Language
   await EasyLocalization.ensureInitialized();
 
   // Load environment variables
   await dotenv.load();
+
+  // Initialize Supabase
+  await Supabase.initialize(
+    url: AppConstants.supabaseUrl,
+    publishableKey: AppConstants.supabaseKey,
+  );
 
   // Initialize Dependency Injection
   await configureDependencies();

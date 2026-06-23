@@ -78,7 +78,9 @@ class _SignupFormState extends State<SignupForm> {
             prefixIcon: const Icon(Icons.lock_outline),
             validator: AppValidator.validatePassword,
           ),
-          const Spacer(),
+          SizedBox(
+            height: 50.h,
+          ),
           BlocBuilder<AuthCubit, AuthState>(
             builder: (context, state) {
               return PrimaryButton(
@@ -103,4 +105,3 @@ class _SignupFormState extends State<SignupForm> {
     }
   }
 }
-

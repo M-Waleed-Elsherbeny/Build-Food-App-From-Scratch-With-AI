@@ -1,13 +1,15 @@
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import '../network/api_client.dart';
+import '../services/session_manager.dart';
 import '../../features/onboarding/data/datasources/onboarding_local_datasource.dart';
 import '../../features/onboarding/data/repositories/onboarding_repository.dart';
 import '../../features/onboarding/presentation/cubit/onboarding_cubit.dart';
-import '../../features/auth/data/datasources/auth_api_service.dart';
+import '../../features/auth/data/datasources/supabase_auth_datasource.dart';
 import '../../features/auth/data/repositories/auth_repository.dart';
-import '../../features/auth/data/repositories/fake_auth_repository.dart';
+import '../../features/auth/data/repositories/auth_repository_impl.dart';
 import '../../features/auth/presentation/cubit/auth_cubit.dart';
 import '../../features/home/data/datasources/home_api_service.dart';
 import '../../features/home/data/repositories/home_repository.dart';
@@ -46,9 +48,10 @@ final GetIt getIt = GetIt.instance;
 
 Future<void> configureDependencies() async {
   // External
-  final SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+  final SharedPreferences sharedPreferences =
+      await SharedPreferences.getInstance();
   const FlutterSecureStorage secureStorage = FlutterSecureStorage();
-  
+
   getIt.registerSingleton<SharedPreferences>(sharedPreferences);
   getIt.registerSingleton<FlutterSecureStorage>(secureStorage);
 
@@ -72,12 +75,20 @@ Future<void> configureDependencies() async {
 
   // --- Auth Feature ---
 
-  // Datasources
-  getIt.registerLazySingleton(() => AuthApiService(getIt()));
+  final SupabaseClient supabaseClient = Supabase.instance.client;
+
+  getIt.registerSingleton<SupabaseClient>(supabaseClient);
+  getIt.registerLazySingleton<SessionManager>(
+    () => SessionManager(supabaseClient),
+  );
+  getIt.registerLazySingleton<SupabaseAuthDatasource>(
+    () => SupabaseAuthDatasource(supabaseClient),
+  );
 
   // Repositories
   getIt.registerLazySingleton<AuthRepository>(
-    () => FakeAuthRepository(getIt()),
+    () => AuthRepositoryImpl(getIt(), getIt()),
+    // () => FakeAuthRepository(getIt()),
     // () => RemoteAuthRepository(getIt(), getIt()),
   );
 
@@ -162,4 +173,3 @@ Future<void> configureDependencies() async {
   getIt.registerFactory(() => OrderHistoryCubit(getIt()));
   getIt.registerFactory(() => OrderSuccessCubit());
 }
-

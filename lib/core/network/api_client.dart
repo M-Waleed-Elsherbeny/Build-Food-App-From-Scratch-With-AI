@@ -1,7 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
-import '../constants/app_constants.dart';
 import 'interceptors/auth_interceptor.dart';
 import 'interceptors/error_interceptor.dart';
 
@@ -12,7 +11,7 @@ class ApiClient {
   ApiClient(FlutterSecureStorage storage)
       : dio = Dio(
           BaseOptions(
-            baseUrl: AppConstants.baseUrl,
+            baseUrl: "",   //AppConstants.baseUrl,
             connectTimeout: const Duration(seconds: 15),
             receiveTimeout: const Duration(seconds: 15),
             headers: {

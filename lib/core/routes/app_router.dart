@@ -3,6 +3,7 @@ import 'package:food_app/features/food_details/presentation/cubit/food_details_c
 import 'package:food_app/features/food_details/presentation/pages/food_details_screen.dart';
 import 'package:go_router/go_router.dart';
 import '../di/injection.dart';
+import '../routes/auth_guard.dart';
 import '../../features/onboarding/presentation/pages/onboarding_page.dart';
 import '../../features/onboarding/presentation/cubit/onboarding_cubit.dart';
 import '../../features/auth/presentation/pages/welcome_page.dart';
@@ -99,32 +100,41 @@ class AppRouter {
       ),
       GoRoute(
         path: AppRoutes.main,
-        builder: (context, state) => BlocProvider(
-          create: (context) => getIt<HomeCubit>(),
-          child: const MainPage(),
+        builder: (context, state) => AuthGuard(
+          child: BlocProvider(
+            create: (context) => getIt<HomeCubit>(),
+            child: const MainPage(),
+          ),
         ),
       ),
       GoRoute(
         path: AppRoutes.home,
-        builder: (context, state) => BlocProvider(
-          create: (context) => getIt<HomeCubit>(),
-          child: const HomePage(),
+        builder: (context, state) => AuthGuard(
+          child: BlocProvider(
+            create: (context) => getIt<HomeCubit>(),
+            child: const HomePage(),
+          ),
         ),
       ),
       GoRoute(
         path: AppRoutes.search,
-        builder: (context, state) => BlocProvider.value(
-          value: getIt<SearchCubit>(),
-          child: const SearchScreen(),
+        builder: (context, state) => AuthGuard(
+          child: BlocProvider.value(
+            value: getIt<SearchCubit>(),
+            child: const SearchScreen(),
+          ),
         ),
       ),
       GoRoute(
         path: AppRoutes.restaurantDetails,
         builder: (context, state) {
           final restaurantId = state.extra as String? ?? '';
-          return BlocProvider(
-            create: (context) => getIt<RestaurantDetailsCubit>()..loadRestaurantData(restaurantId),
-            child: const RestaurantDetailsScreen(),
+          return AuthGuard(
+            child: BlocProvider(
+              create: (context) => getIt<RestaurantDetailsCubit>()
+                ..loadRestaurantData(restaurantId),
+              child: const RestaurantDetailsScreen(),
+            ),
           );
         },
       ),
@@ -132,48 +142,62 @@ class AppRouter {
         path: AppRoutes.foodDetails,
         builder: (context, state) {
           final foodId = state.extra as String? ?? '';
-          return BlocProvider(
-            create: (context) => getIt<FoodDetailsCubit>()..loadFoodDetails(foodId),
-            child: FoodDetailsScreen(foodId: foodId),
+          return AuthGuard(
+            child: BlocProvider(
+              create: (context) =>
+                  getIt<FoodDetailsCubit>()..loadFoodDetails(foodId),
+              child: FoodDetailsScreen(foodId: foodId),
+            ),
           );
         },
       ),
       GoRoute(
         path: AppRoutes.settings,
-        builder: (context, state) => BlocProvider(
-          create: (context) => getIt<SettingsCubit>(),
-          child: const SettingsScreen(),
+        builder: (context, state) => AuthGuard(
+          child: BlocProvider(
+            create: (context) => getIt<SettingsCubit>(),
+            child: const SettingsScreen(),
+          ),
         ),
       ),
       GoRoute(
         path: AppRoutes.cart,
-        builder: (context, state) => BlocProvider(
-          create: (context) => getIt<CartCubit>()..getCartItems(),
-          child: const CartScreen(),
+        builder: (context, state) => AuthGuard(
+          child: BlocProvider(
+            create: (context) => getIt<CartCubit>()..getCartItems(),
+            child: const CartScreen(),
+          ),
         ),
       ),
       GoRoute(
         path: AppRoutes.manageAddresses,
-        builder: (context, state) => BlocProvider(
-          create: (context) => getIt<ProfileCubit>(),
-          child: const ManageAddressesScreen(),
+        builder: (context, state) => AuthGuard(
+          child: BlocProvider(
+            create: (context) => getIt<ProfileCubit>(),
+            child: const ManageAddressesScreen(),
+          ),
         ),
       ),
       GoRoute(
         path: AppRoutes.orderTracking,
         builder: (context, state) {
           final orderId = state.extra as String? ?? 'FG-48291';
-          return BlocProvider(
-            create: (context) => OrderTrackingCubit(FakeOrderTrackingRepository()),
-            child: OrderTrackingScreen(orderId: orderId),
+          return AuthGuard(
+            child: BlocProvider(
+              create: (context) =>
+                  OrderTrackingCubit(FakeOrderTrackingRepository()),
+              child: OrderTrackingScreen(orderId: orderId),
+            ),
           );
         },
       ),
       GoRoute(
         path: AppRoutes.orderSuccess,
-        builder: (context, state) => BlocProvider(
-          create: (context) => getIt<OrderSuccessCubit>(),
-          child: const OrderSuccessScreen(),
+        builder: (context, state) => AuthGuard(
+          child: BlocProvider(
+            create: (context) => getIt<OrderSuccessCubit>(),
+            child: const OrderSuccessScreen(),
+          ),
         ),
       ),
     ],

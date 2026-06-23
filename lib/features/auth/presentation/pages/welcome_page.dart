@@ -62,7 +62,7 @@ class WelcomePage extends StatelessWidget {
                 const Spacer(),
                 PrimaryButton(
                   text: 'Login',
-                  onPressed: () => context.push(AppRoutes.main),
+                  onPressed: () => context.push(AppRoutes.login),
                 ),
                 SizedBox(height: 16.h),
                 SizedBox(

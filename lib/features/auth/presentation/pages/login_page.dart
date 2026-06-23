@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:food_app/core/theme/app_text_style.dart';
+import 'package:food_app/core/utils/custom_snack_bar.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../core/routes/app_router.dart';
 import '../cubit/auth_cubit.dart';
@@ -22,7 +23,7 @@ class LoginPage extends StatelessWidget {
           onPressed: () => context.canPop() ? context.pop() : null,
         ),
       ),
-      body: const _LoginPageBody(),
+      body: const SingleChildScrollView(child: const _LoginPageBody()),
     );
   }
 }
@@ -35,12 +36,11 @@ class _LoginPageBody extends StatelessWidget {
     return BlocListener<AuthCubit, AuthState>(
       listener: (context, state) {
         if (state.status == AuthStatus.success) {
+          customSnackBar(context, message: state.error!);
           context.go(AppRoutes.main);
-          context.read<AuthCubit>().resetStatus();
+          // context.read<AuthCubit>().resetStatus();
         } else if (state.status == AuthStatus.failure) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(state.error ?? 'Login failed')),
-          );
+          return customSnackBar(context, message: state.error!);
         }
       },
       child: SafeArea(
@@ -48,9 +48,10 @@ class _LoginPageBody extends StatelessWidget {
           padding: EdgeInsets.all(24.w),
           child: Column(
             children: [
-              const Expanded(child: LoginForm()),
+              const LoginForm(),
               SizedBox(height: 24.h),
               const _SignupLink(),
+              SizedBox(height: 24.h),
             ],
           ),
         ),
@@ -67,7 +68,8 @@ class _SignupLink extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text('Don\'t have an account? ', style: AppTextStyle.font14Grey600Regular),
+        Text('Don\'t have an account? ',
+            style: AppTextStyle.font14Grey600Regular),
         GestureDetector(
           onTap: () => context.push(AppRoutes.signup),
           child: Text(

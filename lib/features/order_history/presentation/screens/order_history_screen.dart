@@ -20,11 +20,13 @@ class OrderHistoryScreen extends StatefulWidget {
 
 class _OrderHistoryScreenState extends State<OrderHistoryScreen> with SingleTickerProviderStateMixin {
   late TabController _tabController;
+  late ScrollController _scrollController;
 
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
+    _scrollController = ScrollController();
     context.read<OrderHistoryCubit>().loadHistory();
 
     _tabController.addListener(() {
@@ -32,11 +34,18 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> with SingleTick
       final tab = _tabController.index == 0 ? OrderHistoryTab.active : OrderHistoryTab.past;
       context.read<OrderHistoryCubit>().selectTab(tab);
     });
+
+    _scrollController.addListener(() {
+      if (_scrollController.position.pixels >= _scrollController.position.maxScrollExtent - 100) {
+        context.read<OrderHistoryCubit>().loadNextPage();
+      }
+    });
   }
 
   @override
   void dispose() {
     _tabController.dispose();
+    _scrollController.dispose();
     super.dispose();
   }
 
@@ -81,7 +90,8 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> with SingleTick
       ),
       body: BlocBuilder<OrderHistoryCubit, OrderHistoryState>(
         builder: (context, state) {
-          final isLoading = state.status == OrderHistoryStatus.loading;
+          final isLoading = state.status == OrderHistoryStatus.loading || state.status == OrderHistoryStatus.initial;
+          final isPaginating = state.status == OrderHistoryStatus.paginating;
           final items = isLoading
               ? List.generate(3, (_) => OrderHistoryModel.fake())
               : state.filteredOrders;
@@ -91,10 +101,26 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> with SingleTick
             child: items.isEmpty && !isLoading
                 ? _buildEmptyState(context, state.selectedTab)
                 : ListView.separated(
+                    controller: _scrollController,
                     padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
-                    itemCount: items.length,
+                    itemCount: items.length + (isPaginating ? 1 : 0),
                     separatorBuilder: (_, __) => SizedBox(height: 12.h),
                     itemBuilder: (context, index) {
+                      if (index == items.length) {
+                        return Padding(
+                          padding: EdgeInsets.symmetric(vertical: 16.h),
+                          child: Center(
+                            child: SizedBox(
+                              height: 24.h,
+                              width: 24.w,
+                              child: const CircularProgressIndicator(
+                                strokeWidth: 2,
+                                color: ColorsManager.primary,
+                              ),
+                            ),
+                          ),
+                        );
+                      }
                       return OrderHistoryCard(order: items[index]);
                     },
                   ),
@@ -116,7 +142,7 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> with SingleTick
             width: 100.w,
             height: 100.w,
             decoration: BoxDecoration(
-              color: ColorsManager.primary.withOpacity(0.1),
+              color: ColorsManager.primary.withValues(alpha: 0.1),
               shape: BoxShape.circle,
             ),
             child: Icon(

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:skeletonizer/skeletonizer.dart';
+import 'package:go_router/go_router.dart';
+import '../../../../core/routes/app_router.dart';
 import '../../../../core/theme/colors_manager.dart';
 import '../../../../core/theme/app_text_style.dart';
 import '../../../../core/theme/app_theme.dart';
@@ -55,17 +57,7 @@ class CartScreen extends StatelessWidget {
             );
           }
           if (state.status == CartStatus.checkoutReady) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(
-                  'Processing checkout...',
-                  style: AppTextStyle.font14Grey700Medium.copyWith(
-                    color: ColorsManager.white,
-                  ),
-                ),
-                backgroundColor: ColorsManager.success,
-              ),
-            );
+            context.push(AppRoutes.orderSuccess);
           }
         },
         builder: (context, state) {

@@ -24,12 +24,14 @@ class PageIndicator extends StatelessWidget {
           height: 8.h,
           width: currentIndex == index ? 24.w : 8.w,
           decoration: BoxDecoration(
-            color: currentIndex == index ? ColorsManager.primary : ColorsManager.grey300,
+            color: currentIndex == index
+                ? ColorsManager.primary
+                : ColorsManager.grey300,
             borderRadius: BorderRadius.circular(10.r),
             boxShadow: currentIndex == index
                 ? [
                     BoxShadow(
-                      color: ColorsManager.primary.withOpacity(0.3),
+                      color: ColorsManager.primary.withValues(alpha: 0.3),
                       blurRadius: 4,
                       offset: const Offset(0, 2),
                     )
@@ -41,4 +43,3 @@ class PageIndicator extends StatelessWidget {
     );
   }
 }
-

@@ -29,12 +29,11 @@ class ProfileMenuItem extends StatelessWidget {
         : (isDark ? ColorsManager.white : ColorsManager.grey900);
 
     final Color badgeBg = isDestructive
-        ? ColorsManager.error.withOpacity(0.1)
-        : ColorsManager.primary.withOpacity(0.12);
+        ? ColorsManager.error.withValues(alpha: 0.1)
+        : ColorsManager.primary.withValues(alpha: 0.12);
 
-    final Color iconColor = isDestructive
-        ? ColorsManager.error
-        : ColorsManager.primary;
+    final Color iconColor =
+        isDestructive ? ColorsManager.error : ColorsManager.primary;
 
     return InkWell(
       onTap: onTap,

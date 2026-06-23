@@ -30,9 +30,9 @@ class _CartCouponWidgetState extends State<CartCouponWidget> {
           return Container(
             padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
             decoration: BoxDecoration(
-              color: ColorsManager.success.withOpacity(0.1),
+              color: ColorsManager.success.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(12.r),
-              border: Border.all(color: ColorsManager.success.withOpacity(0.5)),
+              border: Border.all(color: ColorsManager.success.withValues(alpha: 0.5)),
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,

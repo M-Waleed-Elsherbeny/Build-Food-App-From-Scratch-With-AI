@@ -58,7 +58,7 @@ class RestaurantMenuItemsSection extends StatelessWidget {
         borderRadius: BorderRadius.circular(16.r),
         boxShadow: [
           BoxShadow(
-            color: ColorsManager.black.withOpacity(0.05),
+            color: ColorsManager.black.withValues(alpha: 0.05),
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),
@@ -80,7 +80,7 @@ class RestaurantMenuItemsSection extends StatelessWidget {
                   width: 100.w,
                   height: 100.w,
                   color: ColorsManager.grey200,
-                  child: Icon(Icons.fastfood, color: ColorsManager.grey400),
+                  child: const Icon(Icons.fastfood, color: ColorsManager.grey400),
                 ),
               ),
             ),
@@ -91,7 +91,8 @@ class RestaurantMenuItemsSection extends StatelessWidget {
                 children: [
                   Text(
                     item.name,
-                    style: AppTextStyle.font16WhiteSemiBold.copyWith(color: ColorsManager.grey900),
+                    style: AppTextStyle.font16WhiteSemiBold
+                        .copyWith(color: ColorsManager.grey900),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -108,7 +109,8 @@ class RestaurantMenuItemsSection extends StatelessWidget {
                     children: [
                       Text(
                         '\$${item.price.toStringAsFixed(2)}',
-                        style: AppTextStyle.font16WhiteSemiBold.copyWith(color: ColorsManager.primary),
+                        style: AppTextStyle.font16WhiteSemiBold
+                            .copyWith(color: ColorsManager.primary),
                       ),
                       GestureDetector(
                         onTap: () {
@@ -130,7 +132,8 @@ class RestaurantMenuItemsSection extends StatelessWidget {
                             color: ColorsManager.primary,
                             borderRadius: BorderRadius.circular(12.r),
                           ),
-                          child: Icon(Icons.add, color: ColorsManager.white, size: 20.sp),
+                          child: Icon(Icons.add,
+                              color: ColorsManager.white, size: 20.sp),
                         ),
                       ),
                     ],

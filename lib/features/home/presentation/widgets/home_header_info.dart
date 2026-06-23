@@ -44,6 +44,7 @@ class HomeHeaderInfo extends StatelessWidget {
             Container(
               width: 40.w,
               height: 40.w,
+              // ignore: prefer_const_constructors
               decoration: BoxDecoration(
                 color: ColorsManager.grey200,
                 shape: BoxShape.circle,

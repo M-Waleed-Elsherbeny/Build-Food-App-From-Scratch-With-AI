@@ -117,7 +117,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             ),
                             Divider(
                                 height: 1,
-                                color: ColorsManager.grey200.withOpacity(0.3)),
+                                color: ColorsManager.grey200
+                                    .withValues(alpha: 0.3)),
                             ProfileMenuItem(
                               icon: Icons.payment_outlined,
                               title: 'Payment Methods',
@@ -126,7 +127,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             ),
                             Divider(
                                 height: 1,
-                                color: ColorsManager.grey200.withOpacity(0.3)),
+                                color: ColorsManager.grey200
+                                    .withValues(alpha: 0.3)),
                             ProfileMenuItem(
                               icon: Icons.favorite_border,
                               title: 'My Favorites',
@@ -135,7 +137,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             ),
                             Divider(
                                 height: 1,
-                                color: ColorsManager.grey200.withOpacity(0.3)),
+                                color: ColorsManager.grey200
+                                    .withValues(alpha: 0.3)),
                             ProfileMenuItem(
                               icon: Icons.notifications_none_outlined,
                               title: 'Notifications',
@@ -145,7 +148,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             ),
                             Divider(
                                 height: 1,
-                                color: ColorsManager.grey200.withOpacity(0.3)),
+                                color: ColorsManager.grey200
+                                    .withValues(alpha: 0.3)),
                             ProfileMenuItem(
                               icon: Icons.language_outlined,
                               title: 'Language',
@@ -178,7 +182,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             ),
                             Divider(
                                 height: 1,
-                                color: ColorsManager.grey200.withOpacity(0.3)),
+                                color: ColorsManager.grey200
+                                    .withValues(alpha: 0.3)),
                             ProfileMenuItem(
                               icon: Icons.info_outline,
                               title: 'About',
@@ -187,7 +192,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             ),
                             Divider(
                                 height: 1,
-                                color: ColorsManager.grey200.withOpacity(0.3)),
+                                color: ColorsManager.grey200
+                                    .withValues(alpha: 0.3)),
                             ProfileMenuItem(
                               icon: Icons.security_outlined,
                               title: 'Privacy Policy',
@@ -217,7 +223,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           style: GoogleFonts.inter(
                             fontSize: 12.sp,
                             fontWeight: FontWeight.w600,
-                            color: ColorsManager.grey500.withOpacity(0.6),
+                            color: ColorsManager.grey500.withValues(alpha: 0.6),
                             letterSpacing: 2.4,
                           ),
                         ),
@@ -250,7 +256,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 border: Border.all(color: ColorsManager.white, width: 4.r),
                 boxShadow: [
                   BoxShadow(
-                    color: ColorsManager.primary.withOpacity(0.12),
+                    color: ColorsManager.primary.withValues(alpha: 0.12),
                     blurRadius: 40.r,
                     offset: Offset(0, 10.h),
                   ),

@@ -24,7 +24,7 @@ class OrderTrackingMapWidget extends StatelessWidget {
         ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.2),
+            color: Colors.black.withValues(alpha: 0.2),
             blurRadius: 12,
             offset: const Offset(0, 4),
           ),
@@ -87,7 +87,8 @@ class OrderTrackingMapWidget extends StatelessWidget {
               ),
               child: Text(
                 'Order #$orderId',
-                style: AppTextStyle.font12Grey500Regular.copyWith(color: Colors.white70),
+                style: AppTextStyle.font12Grey500Regular
+                    .copyWith(color: Colors.white70),
               ),
             ),
           ),
@@ -111,7 +112,10 @@ class OrderTrackingMapWidget extends StatelessWidget {
             color: color,
             shape: BoxShape.circle,
             boxShadow: [
-              BoxShadow(color: color.withOpacity(0.4), blurRadius: 8, spreadRadius: 2),
+              BoxShadow(
+                  color: color.withValues(alpha: 0.4),
+                  blurRadius: 8,
+                  spreadRadius: 2),
             ],
           ),
           child: Icon(icon, color: Colors.white, size: 18.sp),
@@ -123,7 +127,8 @@ class OrderTrackingMapWidget extends StatelessWidget {
             color: Colors.black54,
             borderRadius: BorderRadius.circular(6.r),
           ),
-          child: Text(label, style: TextStyle(color: Colors.white, fontSize: 11.sp)),
+          child: Text(label,
+              style: TextStyle(color: Colors.white, fontSize: 11.sp)),
         ),
       ],
     );
@@ -135,7 +140,7 @@ class _MapPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = Colors.white.withOpacity(0.05)
+      ..color = Colors.white.withValues(alpha: 0.05)
       ..strokeWidth = 1;
 
     // Horizontal lines

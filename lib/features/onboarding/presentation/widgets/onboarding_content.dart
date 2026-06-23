@@ -26,7 +26,7 @@ class OnboardingContent extends StatelessWidget {
               borderRadius: BorderRadius.circular(24.r),
               boxShadow: [
                 BoxShadow(
-                  color: ColorsManager.primary.withOpacity(0.05),
+                  color: ColorsManager.primary.withValues(alpha: 0.05),
                   blurRadius: 20,
                   offset: const Offset(0, 10),
                 ),
@@ -73,4 +73,3 @@ class OnboardingContent extends StatelessWidget {
     );
   }
 }
-

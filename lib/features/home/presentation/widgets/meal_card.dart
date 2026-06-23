@@ -25,7 +25,7 @@ class MealCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(16.r),
           boxShadow: [
             BoxShadow(
-              color: ColorsManager.grey200.withOpacity(0.5),
+              color: ColorsManager.grey200.withValues(alpha: 0.5),
               blurRadius: 10,
               offset: const Offset(0, 5),
             ),
@@ -44,7 +44,8 @@ class MealCard extends StatelessWidget {
                 errorBuilder: (_, __, ___) => Container(
                   height: 100.h,
                   color: ColorsManager.grey200,
-                  child: const Icon(Icons.fastfood, color: ColorsManager.grey400),
+                  child:
+                      const Icon(Icons.fastfood, color: ColorsManager.grey400),
                 ),
               ),
             ),

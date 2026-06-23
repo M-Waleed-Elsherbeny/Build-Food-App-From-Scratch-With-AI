@@ -38,7 +38,7 @@ class FoodCustomizationSection extends StatelessWidget {
                     Container(
                       padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
                       decoration: BoxDecoration(
-                        color: ColorsManager.primary.withOpacity(0.1),
+                        color: ColorsManager.primary.withValues(alpha: 0.1),
                         borderRadius: BorderRadius.circular(4.r),
                       ),
                       child: Text(

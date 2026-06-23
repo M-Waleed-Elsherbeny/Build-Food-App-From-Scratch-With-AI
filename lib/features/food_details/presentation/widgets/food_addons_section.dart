@@ -10,11 +10,7 @@ class FoodAddonsSection extends StatelessWidget {
   final List<AddonModel> addons;
   final List<AddonModel> selectedAddons;
 
-  const FoodAddonsSection({
-    Key? key,
-    required this.addons,
-    required this.selectedAddons,
-  }) : super(key: key);
+  const FoodAddonsSection({super.key, required this.addons, required this.selectedAddons});
 
   @override
   Widget build(BuildContext context) {

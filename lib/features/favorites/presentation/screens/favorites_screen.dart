@@ -62,14 +62,13 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
       ),
       body: BlocBuilder<FavoritesCubit, FavoritesState>(
         builder: (context, state) {
-          final isLoading = state.status == FavoritesStatus.loading;
+          final isLoading = state.status == FavoritesStatus.loading || state.status == FavoritesStatus.initial;
           final items = isLoading
               ? List.generate(6, (_) => FavoriteItemModel.fake())
               : state.favorites;
 
           if (!isLoading &&
-              state.status == FavoritesStatus.success &&
-              items.isEmpty) {
+              (state.status == FavoritesStatus.empty || items.isEmpty)) {
             return const FavoritesEmptyState();
           }
 

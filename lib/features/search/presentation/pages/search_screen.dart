@@ -40,7 +40,8 @@ class _SearchScreenState extends State<SearchScreen> {
           autofocus: true,
           style: AppTextStyle.font14Grey700Medium,
           onChanged: (query) => context.read<SearchCubit>().search(query),
-          onSubmitted: (query) => context.read<SearchCubit>().submitSearch(query),
+          onSubmitted: (query) =>
+              context.read<SearchCubit>().submitSearch(query),
           decoration: const InputDecoration(
             hintText: 'Search food, restaurants...',
             hintStyle: TextStyle(color: ColorsManager.grey400),
@@ -89,7 +90,8 @@ class _SearchScreenState extends State<SearchScreen> {
                     restaurant: restaurant,
                     width: double.infinity,
                     onTap: () {
-                      context.push(AppRoutes.restaurantDetails, extra: restaurant.id);
+                      context.push(AppRoutes.restaurantDetails,
+                          extra: restaurant.id);
                     },
                   ),
                 );
@@ -111,10 +113,13 @@ class _SearchScreenState extends State<SearchScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Recent Searches', style: AppTextStyle.font18Grey900SemiBold),
+                Text('Recent Searches',
+                    style: AppTextStyle.font18Grey900SemiBold),
                 TextButton(
-                  onPressed: () => context.read<SearchCubit>().clearRecentSearches(),
-                  child: Text('Clear All', style: AppTextStyle.font14PrimarySemiBold),
+                  onPressed: () =>
+                      context.read<SearchCubit>().clearRecentSearches(),
+                  child: Text('Clear All',
+                      style: AppTextStyle.font14PrimarySemiBold),
                 ),
               ],
             ),
@@ -127,7 +132,8 @@ class _SearchScreenState extends State<SearchScreen> {
                   label: Text(query, style: AppTextStyle.font14Grey700Medium),
                   backgroundColor: ColorsManager.white,
                   side: const BorderSide(color: ColorsManager.grey300),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.r)),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20.r)),
                   onPressed: () {
                     _searchController.text = query;
                     context.read<SearchCubit>().submitSearch(query);
@@ -138,18 +144,21 @@ class _SearchScreenState extends State<SearchScreen> {
             SizedBox(height: 24.h),
           ],
           if (state.trendingSearches.isNotEmpty) ...[
-            Text('Trending Searches', style: AppTextStyle.font18Grey900SemiBold),
+            Text('Trending Searches',
+                style: AppTextStyle.font18Grey900SemiBold),
             SizedBox(height: 12.h),
             Wrap(
               spacing: 8.w,
               runSpacing: 8.h,
               children: state.trendingSearches.map((query) {
                 return ActionChip(
-                  avatar: Icon(Icons.trending_up, size: 16.sp, color: ColorsManager.primary),
+                  avatar: Icon(Icons.trending_up,
+                      size: 16.sp, color: ColorsManager.primary),
                   label: Text(query, style: AppTextStyle.font14Grey700Medium),
-                  backgroundColor: ColorsManager.primary.withOpacity(0.1),
+                  backgroundColor: ColorsManager.primary.withValues(alpha: 0.1),
                   side: BorderSide.none,
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.r)),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20.r)),
                   onPressed: () {
                     _searchController.text = query;
                     context.read<SearchCubit>().submitSearch(query);

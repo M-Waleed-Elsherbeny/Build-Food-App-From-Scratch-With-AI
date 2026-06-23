@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 import '../../data/models/favorite_item_model.dart';
 
-enum FavoritesStatus { initial, loading, success, failure }
+enum FavoritesStatus { initial, loading, loaded, favoriteAdded, favoriteRemoved, empty, error }
 
 class FavoritesState extends Equatable {
   final FavoritesStatus status;
@@ -29,3 +29,4 @@ class FavoritesState extends Equatable {
   @override
   List<Object?> get props => [status, favorites, errorMsg];
 }
+

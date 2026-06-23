@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 import '../../data/models/order_tracking_model.dart';
 
-enum OrderTrackingStatus { initial, loading, success, failure }
+enum OrderTrackingStatus { initial, loading, trackingLoaded, statusUpdated, delivered, failure }
 
 class OrderTrackingState extends Equatable {
   final OrderTrackingStatus status;
@@ -29,3 +29,4 @@ class OrderTrackingState extends Equatable {
   @override
   List<Object?> get props => [status, trackingData, errorMsg];
 }
+

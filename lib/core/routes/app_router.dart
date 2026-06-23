@@ -28,6 +28,8 @@ import '../../features/profile/presentation/pages/manage_addresses_screen.dart';
 import '../../features/order_tracking/presentation/cubit/order_tracking_cubit.dart';
 import '../../features/order_tracking/presentation/screens/order_tracking_screen.dart';
 import '../../features/order_tracking/data/repositories/fake_order_tracking_repository.dart';
+import '../../features/order_history/presentation/screens/order_success_screen.dart';
+import '../../features/order_history/presentation/cubit/order_success_cubit.dart';
 
 abstract class AppRoutes {
   static const String splash = '/';
@@ -47,6 +49,7 @@ abstract class AppRoutes {
   static const String foodDetails = '/food-details';
   static const String manageAddresses = '/manage-addresses';
   static const String orderTracking = '/order-tracking';
+  static const String orderSuccess = '/order-success';
 }
 
 class AppRouter {
@@ -165,6 +168,13 @@ class AppRouter {
             child: OrderTrackingScreen(orderId: orderId),
           );
         },
+      ),
+      GoRoute(
+        path: AppRoutes.orderSuccess,
+        builder: (context, state) => BlocProvider(
+          create: (context) => getIt<OrderSuccessCubit>(),
+          child: const OrderSuccessScreen(),
+        ),
       ),
     ],
   );

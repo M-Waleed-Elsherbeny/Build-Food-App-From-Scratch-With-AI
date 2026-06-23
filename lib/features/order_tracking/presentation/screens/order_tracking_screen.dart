@@ -34,7 +34,8 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen> {
     final isDark = context.isDarkMode;
 
     return Scaffold(
-      backgroundColor: isDark ? ColorsManager.backgroundDark : ColorsManager.backgroundLight,
+      backgroundColor:
+          isDark ? ColorsManager.backgroundDark : ColorsManager.backgroundLight,
       appBar: AppBar(
         backgroundColor: ColorsManager.transparent,
         elevation: 0,
@@ -47,13 +48,15 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen> {
               shape: BoxShape.circle,
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.08),
+                  color: Colors.black.withValues(alpha: 0.08),
                   blurRadius: 8,
                   offset: const Offset(0, 2),
                 ),
               ],
             ),
-            child: Icon(Icons.arrow_back_ios_new_rounded, size: 18.sp, color: isDark ? ColorsManager.white : ColorsManager.grey900),
+            child: Icon(Icons.arrow_back_ios_new_rounded,
+                size: 18.sp,
+                color: isDark ? ColorsManager.white : ColorsManager.grey900),
           ),
         ),
         title: Text('Track Order', style: AppTextStyle.font18Grey900SemiBold),
@@ -62,9 +65,8 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen> {
       body: BlocBuilder<OrderTrackingCubit, OrderTrackingState>(
         builder: (context, state) {
           final isLoading = state.status == OrderTrackingStatus.loading;
-          final data = isLoading
-              ? OrderTrackingModel.fake()
-              : state.trackingData;
+          final data =
+              isLoading ? OrderTrackingModel.fake() : state.trackingData;
 
           if (state.status == OrderTrackingStatus.failure) {
             return _buildErrorState(context, state.errorMsg);
@@ -72,34 +74,40 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen> {
 
           return Skeletonizer(
             enabled: isLoading,
-            child: SingleChildScrollView(
-              padding: EdgeInsets.only(bottom: 32.h),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // Map view
-                  OrderTrackingMapWidget(orderId: widget.orderId),
-                  SizedBox(height: 20.h),
+            child: RefreshIndicator(
+              onRefresh: () =>
+                  context.read<OrderTrackingCubit>().refreshTrackingData(),
+              color: ColorsManager.primary,
+              child: SingleChildScrollView(
+                physics: const AlwaysScrollableScrollPhysics(),
+                padding: EdgeInsets.only(bottom: 32.h),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // Map view
+                    OrderTrackingMapWidget(orderId: widget.orderId),
+                    SizedBox(height: 20.h),
 
-                  // ETA Banner
-                  if (data != null) _buildEtaBanner(context, data, isDark),
-                  SizedBox(height: 20.h),
+                    // ETA Banner
+                    if (data != null) _buildEtaBanner(context, data, isDark),
+                    SizedBox(height: 20.h),
 
-                  // Driver info card
-                  if (data?.driver != null)
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 16.w),
-                      child: DriverInfoCard(driver: data!.driver!),
-                    ),
-                  SizedBox(height: 20.h),
+                    // Driver info card
+                    if (data?.driver != null)
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 16.w),
+                        child: DriverInfoCard(driver: data!.driver!),
+                      ),
+                    SizedBox(height: 20.h),
 
-                  // Timeline
-                  if (data != null)
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 16.w),
-                      child: TrackingTimelineWidget(timeline: data.timeline),
-                    ),
-                ],
+                    // Timeline
+                    if (data != null)
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 16.w),
+                        child: TrackingTimelineWidget(timeline: data.timeline),
+                      ),
+                  ],
+                ),
               ),
             ),
           );
@@ -108,13 +116,17 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen> {
     );
   }
 
-  Widget _buildEtaBanner(BuildContext context, OrderTrackingModel data, bool isDark) {
+  Widget _buildEtaBanner(
+      BuildContext context, OrderTrackingModel data, bool isDark) {
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 16.w),
       padding: EdgeInsets.all(16.r),
       decoration: BoxDecoration(
         gradient: const LinearGradient(
-          colors: [ColorsManager.primaryGradientStart, ColorsManager.primaryGradientEnd],
+          colors: [
+            ColorsManager.primaryGradientStart,
+            ColorsManager.primaryGradientEnd
+          ],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
@@ -126,11 +138,14 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Estimated Delivery', style: AppTextStyle.font14WhiteRegular),
+                Text('Estimated Delivery',
+                    style: AppTextStyle.font14WhiteRegular),
                 SizedBox(height: 4.h),
-                Text('${data.etaMinutes} min', style: AppTextStyle.font24WhiteBold),
+                Text('${data.etaMinutes} min',
+                    style: AppTextStyle.font24WhiteBold),
                 SizedBox(height: 4.h),
-                Text(data.restaurantName, style: AppTextStyle.font14WhiteRegular),
+                Text(data.restaurantName,
+                    style: AppTextStyle.font14WhiteRegular),
               ],
             ),
           ),
@@ -139,7 +154,7 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen> {
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.h),
                 decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.2),
+                  color: Colors.white.withValues(alpha: 0.2),
                   borderRadius: BorderRadius.circular(20.r),
                 ),
                 child: Text(
@@ -148,7 +163,9 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen> {
                 ),
               ),
               SizedBox(height: 8.h),
-              Text('Order #${data.id}', style: AppTextStyle.font12Grey500Regular.copyWith(color: Colors.white70)),
+              Text('Order #${data.id}',
+                  style: AppTextStyle.font12Grey500Regular
+                      .copyWith(color: Colors.white70)),
             ],
           ),
         ],
@@ -163,14 +180,20 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.error_outline_rounded, size: 64.sp, color: ColorsManager.error),
+            Icon(Icons.error_outline_rounded,
+                size: 64.sp, color: ColorsManager.error),
             SizedBox(height: 16.h),
-            Text('Something went wrong', style: AppTextStyle.font18Grey900SemiBold),
+            Text('Something went wrong',
+                style: AppTextStyle.font18Grey900SemiBold),
             SizedBox(height: 8.h),
-            Text(message, style: AppTextStyle.font14Grey600Regular, textAlign: TextAlign.center),
+            Text(message,
+                style: AppTextStyle.font14Grey600Regular,
+                textAlign: TextAlign.center),
             SizedBox(height: 24.h),
             TextButton(
-              onPressed: () => context.read<OrderTrackingCubit>().loadTrackingInfo(widget.orderId),
+              onPressed: () => context
+                  .read<OrderTrackingCubit>()
+                  .loadTrackingInfo(widget.orderId),
               child: Text('Retry', style: AppTextStyle.font16PrimaryBold),
             ),
           ],

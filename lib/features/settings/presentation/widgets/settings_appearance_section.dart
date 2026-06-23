@@ -18,13 +18,17 @@ class SettingsAppearanceSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SettingsSectionHeader(title: tr('Appearance')), // Need to add translation key or just use tr('settings_appearance')
+        SettingsSectionHeader(
+            title: tr(
+                'Appearance')), // Need to add translation key or just use tr('settings_appearance')
         SettingsItemContainer(
           child: SwitchListTile(
-            activeColor: ColorsManager.primary,
+            activeThumbColor: ColorsManager.primary,
             title: Text(
               'Dark Mode',
-              style: isDark ? AppTextStyle.font16WhiteRegular : AppTextStyle.font16Grey700Regular,
+              style: isDark
+                  ? AppTextStyle.font16WhiteRegular
+                  : AppTextStyle.font16Grey700Regular,
             ),
             value: state.settings?.isDarkMode ?? false,
             onChanged: (val) {

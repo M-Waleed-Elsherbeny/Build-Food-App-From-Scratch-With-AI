@@ -36,7 +36,8 @@ class SettingsItemContainer extends StatelessWidget {
         borderRadius: BorderRadius.circular(12.r),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(context.isDarkMode ? 0.3 : 0.02),
+            color:
+                Colors.black.withValues(alpha: context.isDarkMode ? 0.3 : 0.02),
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),

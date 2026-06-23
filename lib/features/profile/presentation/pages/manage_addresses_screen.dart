@@ -20,7 +20,8 @@ class ManageAddressesScreen extends StatelessWidget {
     final isDark = context.isDarkMode;
 
     return Scaffold(
-      backgroundColor: isDark ? ColorsManager.backgroundDark : ColorsManager.backgroundLight,
+      backgroundColor:
+          isDark ? ColorsManager.backgroundDark : ColorsManager.backgroundLight,
       appBar: AppBar(
         backgroundColor: isDark ? ColorsManager.grey900 : ColorsManager.white,
         elevation: 0,
@@ -34,7 +35,9 @@ class ManageAddressesScreen extends StatelessWidget {
         ),
         title: Text(
           'My Addresses',
-          style: isDark ? AppTextStyle.font18WhiteSemiBold : AppTextStyle.font18Grey900SemiBold,
+          style: isDark
+              ? AppTextStyle.font18WhiteSemiBold
+              : AppTextStyle.font18Grey900SemiBold,
         ),
         centerTitle: true,
       ),
@@ -63,7 +66,8 @@ class ManageAddressesScreen extends StatelessWidget {
                       : ListView.separated(
                           padding: EdgeInsets.all(24.w),
                           itemCount: addresses.length,
-                          separatorBuilder: (context, index) => SizedBox(height: 16.h),
+                          separatorBuilder: (context, index) =>
+                              SizedBox(height: 16.h),
                           itemBuilder: (context, index) {
                             final address = addresses[index];
                             return _buildAddressCard(context, address, isDark);
@@ -118,21 +122,25 @@ class ManageAddressesScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildAddressCard(BuildContext context, AddressModel address, bool isDark) {
+  Widget _buildAddressCard(
+      BuildContext context, AddressModel address, bool isDark) {
     return Container(
       decoration: BoxDecoration(
         color: isDark ? ColorsManager.grey900 : ColorsManager.white,
         borderRadius: BorderRadius.circular(24.r),
         boxShadow: [
           BoxShadow(
-            color: ColorsManager.primary.withOpacity(isDark ? 0.02 : 0.05),
+            color:
+                ColorsManager.primary.withValues(alpha: isDark ? 0.02 : 0.05),
             offset: Offset(0, 8.h),
             blurRadius: 20.r,
           ),
         ],
         border: address.isDefault
             ? Border.all(color: ColorsManager.primary, width: 1.5.r)
-            : Border.all(color: isDark ? ColorsManager.grey800 : ColorsManager.grey200, width: 1.r),
+            : Border.all(
+                color: isDark ? ColorsManager.grey800 : ColorsManager.grey200,
+                width: 1.r),
       ),
       padding: EdgeInsets.all(16.w),
       child: Row(
@@ -143,13 +151,15 @@ class ManageAddressesScreen extends StatelessWidget {
             width: 40.w,
             height: 40.h,
             decoration: BoxDecoration(
-              color: ColorsManager.primary.withOpacity(0.1),
+              color: ColorsManager.primary.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(12.r),
             ),
             child: Icon(
               address.title.toLowerCase() == 'home'
                   ? Icons.home_outlined
-                  : (address.title.toLowerCase() == 'work' ? Icons.work_outline : Icons.location_on_outlined),
+                  : (address.title.toLowerCase() == 'work'
+                      ? Icons.work_outline
+                      : Icons.location_on_outlined),
               color: ColorsManager.primary,
               size: 20.sp,
             ),
@@ -165,7 +175,9 @@ class ManageAddressesScreen extends StatelessWidget {
                     Text(
                       address.title,
                       style: GoogleFonts.poppins(
-                        color: isDark ? ColorsManager.white : ColorsManager.grey900,
+                        color: isDark
+                            ? ColorsManager.white
+                            : ColorsManager.grey900,
                         fontSize: 16.sp,
                         fontWeight: FontWeight.w600,
                       ),
@@ -174,10 +186,11 @@ class ManageAddressesScreen extends StatelessWidget {
                       SizedBox(width: 8.w),
                       Container(
                         decoration: BoxDecoration(
-                          color: ColorsManager.primary.withOpacity(0.12),
+                          color: ColorsManager.primary.withValues(alpha: 0.12),
                           borderRadius: BorderRadius.circular(8.r),
                         ),
-                        padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 8.w, vertical: 4.h),
                         child: Text(
                           'DEFAULT',
                           style: GoogleFonts.inter(
@@ -194,7 +207,8 @@ class ManageAddressesScreen extends StatelessWidget {
                 Text(
                   address.addressLine,
                   style: GoogleFonts.inter(
-                    color: isDark ? ColorsManager.grey400 : ColorsManager.grey600,
+                    color:
+                        isDark ? ColorsManager.grey400 : ColorsManager.grey600,
                     fontSize: 14.sp,
                   ),
                 ),
@@ -203,7 +217,7 @@ class ManageAddressesScreen extends StatelessWidget {
           ),
           // Action Buttons
           PopupMenuButton<String>(
-            icon: Icon(Icons.more_vert, color: ColorsManager.grey400),
+            icon: const Icon(Icons.more_vert, color: ColorsManager.grey400),
             onSelected: (action) {
               if (action == 'default') {
                 context.read<ProfileCubit>().setAsDefaultAddress(address.id);
@@ -215,13 +229,15 @@ class ManageAddressesScreen extends StatelessWidget {
               if (!address.isDefault)
                 PopupMenuItem(
                   value: 'default',
-                  child: Text('Set as Default', style: GoogleFonts.inter(fontSize: 14.sp)),
+                  child: Text('Set as Default',
+                      style: GoogleFonts.inter(fontSize: 14.sp)),
                 ),
               PopupMenuItem(
                 value: 'delete',
                 child: Text(
                   'Delete',
-                  style: GoogleFonts.inter(color: ColorsManager.error, fontSize: 14.sp),
+                  style: GoogleFonts.inter(
+                      color: ColorsManager.error, fontSize: 14.sp),
                 ),
               ),
             ],
@@ -290,7 +306,9 @@ class _AddAddressSheetState extends State<_AddAddressSheet> {
                     width: 48.w,
                     height: 5.h,
                     decoration: BoxDecoration(
-                      color: isDark ? ColorsManager.grey700 : ColorsManager.grey300,
+                      color: isDark
+                          ? ColorsManager.grey700
+                          : ColorsManager.grey300,
                       borderRadius: BorderRadius.circular(10.r),
                     ),
                   ),
@@ -337,14 +355,16 @@ class _AddAddressSheetState extends State<_AddAddressSheet> {
                     Text(
                       'Set as default address',
                       style: GoogleFonts.inter(
-                        color: isDark ? ColorsManager.white : ColorsManager.grey900,
+                        color: isDark
+                            ? ColorsManager.white
+                            : ColorsManager.grey900,
                         fontSize: 16.sp,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
                     Switch(
                       value: _isDefault,
-                      activeColor: ColorsManager.primary,
+                      activeThumbColor: ColorsManager.primary,
                       onChanged: (value) {
                         setState(() {
                           _isDefault = value;

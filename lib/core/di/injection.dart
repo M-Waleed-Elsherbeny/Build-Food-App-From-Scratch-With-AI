@@ -40,6 +40,7 @@ import '../../features/order_tracking/presentation/cubit/order_tracking_cubit.da
 import '../../features/order_history/data/repositories/order_history_repository.dart';
 import '../../features/order_history/data/repositories/fake_order_history_repository.dart';
 import '../../features/order_history/presentation/cubit/order_history_cubit.dart';
+import '../../features/order_history/presentation/cubit/order_success_cubit.dart';
 
 final GetIt getIt = GetIt.instance;
 
@@ -142,19 +143,23 @@ Future<void> configureDependencies() async {
   // --- Favorites Feature ---
   getIt.registerLazySingleton<FavoritesRepository>(
     () => FakeFavoritesRepository(getIt()),
+    // () => RemoteFavoritesRepository(getIt()),
   );
   getIt.registerFactory(() => FavoritesCubit(getIt()));
 
   // --- Order Tracking Feature ---
   getIt.registerLazySingleton<OrderTrackingRepository>(
     () => FakeOrderTrackingRepository(),
+    // () => RemoteOrderTrackingRepository(getIt()),
   );
   getIt.registerFactory(() => OrderTrackingCubit(getIt()));
 
   // --- Order History Feature ---
   getIt.registerLazySingleton<OrderHistoryRepository>(
     () => FakeOrderHistoryRepository(),
+    // () => RemoteOrderHistoryRepository(getIt()),
   );
   getIt.registerFactory(() => OrderHistoryCubit(getIt()));
+  getIt.registerFactory(() => OrderSuccessCubit());
 }
 

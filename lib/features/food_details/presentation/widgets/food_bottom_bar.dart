@@ -10,11 +10,7 @@ class FoodBottomBar extends StatelessWidget {
   final double price;
   final int quantity;
 
-  const FoodBottomBar({
-    Key? key,
-    required this.price,
-    required this.quantity,
-  }) : super(key: key);
+  const FoodBottomBar({super.key, required this.price, required this.quantity});
 
   @override
   Widget build(BuildContext context) {
@@ -23,10 +19,10 @@ class FoodBottomBar extends StatelessWidget {
       decoration: BoxDecoration(
         color: ColorsManager.white,
         boxShadow: [
-          BoxShadow(
+          const BoxShadow(
             color: ColorsManager.grey200,
             blurRadius: 10,
-            offset: const Offset(0, -2),
+            offset: Offset(0, -2),
           ),
         ],
         borderRadius: BorderRadius.only(

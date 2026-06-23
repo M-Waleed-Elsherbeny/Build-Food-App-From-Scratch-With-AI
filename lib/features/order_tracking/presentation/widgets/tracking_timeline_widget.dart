@@ -22,7 +22,7 @@ class TrackingTimelineWidget extends StatelessWidget {
         borderRadius: BorderRadius.circular(16.r),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(isDark ? 0.3 : 0.05),
+            color: Colors.black.withValues(alpha: isDark ? 0.3 : 0.05),
             blurRadius: 8,
             offset: const Offset(0, 2),
           ),
@@ -60,7 +60,9 @@ class TrackingTimelineWidget extends StatelessWidget {
               Container(
                 width: 2.w,
                 height: 52.h,
-                color: step.isCompleted ? ColorsManager.primary : ColorsManager.grey200,
+                color: step.isCompleted
+                    ? ColorsManager.primary
+                    : ColorsManager.grey200,
               ),
           ],
         ),
@@ -103,14 +105,15 @@ class TrackingTimelineWidget extends StatelessWidget {
           color: ColorsManager.primary,
           shape: BoxShape.circle,
         ),
-        child: Icon(Icons.check_rounded, color: ColorsManager.white, size: 14.sp),
+        child:
+            Icon(Icons.check_rounded, color: ColorsManager.white, size: 14.sp),
       );
     } else if (step.isActive) {
       return Container(
         width: 24.w,
         height: 24.w,
         decoration: BoxDecoration(
-          color: ColorsManager.primary.withOpacity(0.15),
+          color: ColorsManager.primary.withValues(alpha: 0.15),
           shape: BoxShape.circle,
           border: Border.all(color: ColorsManager.primary, width: 2),
         ),

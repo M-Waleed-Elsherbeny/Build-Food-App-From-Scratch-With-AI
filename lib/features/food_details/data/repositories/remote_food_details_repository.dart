@@ -17,7 +17,7 @@ class RemoteFoodDetailsRepository implements FoodDetailsRepository {
       if (response.statusCode == 200) {
         return Right(FoodDetailsModel.fromJson(response.data));
       } else {
-        return Left(ServerFailure('Failed to load food details'));
+        return const Left(ServerFailure('Failed to load food details'));
       }
     } on DioException catch (e) {
       // Note: ErrorHandler is expected to be used in real scenarios

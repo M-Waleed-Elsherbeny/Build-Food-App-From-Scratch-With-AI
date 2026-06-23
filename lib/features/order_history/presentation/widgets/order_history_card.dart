@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:food_app/core/routes/app_router.dart';
@@ -7,6 +8,8 @@ import 'package:food_app/core/theme/app_text_style.dart';
 import 'package:food_app/core/theme/app_theme.dart';
 import 'package:food_app/core/widgets/primary_button.dart';
 import 'package:food_app/features/order_history/data/models/order_history_model.dart';
+import 'package:food_app/features/cart/presentation/cubit/cart_cubit.dart';
+import 'package:food_app/features/cart/data/models/cart_item_model.dart';
 
 /// Card widget displaying a single order from the user's history.
 class OrderHistoryCard extends StatelessWidget {
@@ -25,7 +28,7 @@ class OrderHistoryCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(16.r),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(isDark ? 0.3 : 0.05),
+            color: Colors.black.withValues(alpha: isDark ? 0.3 : 0.05),
             blurRadius: 8,
             offset: const Offset(0, 2),
           ),
@@ -65,7 +68,7 @@ class OrderHistoryCard extends StatelessWidget {
                 Container(
                   padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 4.h),
                   decoration: BoxDecoration(
-                    color: _getStatusColor(order.status).withOpacity(0.12),
+                    color: _getStatusColor(order.status).withValues(alpha: 0.12),
                     borderRadius: BorderRadius.circular(20.r),
                   ),
                   child: Text(
@@ -152,7 +155,27 @@ class OrderHistoryCard extends StatelessWidget {
                         width: 130.w,
                       )
                     : OutlinedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          final cartCubit = context.read<CartCubit>();
+                          for (final item in order.items) {
+                            cartCubit.addItemToCart(
+                              CartItemModel(
+                                id: item.name.hashCode.toString(),
+                                name: item.name,
+                                imageUrl: '',
+                                price: item.price,
+                                quantity: item.quantity,
+                                restaurantName: '',
+                              ),
+                            );
+                          }
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text('Added ${order.items.length} items to your cart!'),
+                              backgroundColor: ColorsManager.success,
+                            ),
+                          );
+                        },
                         style: OutlinedButton.styleFrom(
                           side: const BorderSide(color: ColorsManager.primary),
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.r)),

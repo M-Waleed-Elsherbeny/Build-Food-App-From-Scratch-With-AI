@@ -23,7 +23,7 @@ class StickyCartCta extends StatelessWidget {
         decoration: BoxDecoration(
           boxShadow: [
             BoxShadow(
-              color: ColorsManager.primary.withOpacity(0.3),
+              color: ColorsManager.primary.withValues(alpha: 0.3),
               blurRadius: 15,
               offset: const Offset(0, 5),
             ),
@@ -40,30 +40,33 @@ class StickyCartCta extends StatelessWidget {
             ),
             elevation: 0,
           ),
-          child: isUpdating 
-            ? SizedBox(
-                height: 24.h,
-                width: 24.h,
-                child: const CircularProgressIndicator(color: ColorsManager.white, strokeWidth: 2),
-              )
-            : Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(
-                    padding: EdgeInsets.all(8.w),
-                    decoration: BoxDecoration(
-                      color: ColorsManager.white.withOpacity(0.2),
-                      shape: BoxShape.circle,
+          child: isUpdating
+              ? SizedBox(
+                  height: 24.h,
+                  width: 24.h,
+                  child: const CircularProgressIndicator(
+                      color: ColorsManager.white, strokeWidth: 2),
+                )
+              : Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                      padding: EdgeInsets.all(8.w),
+                      decoration: BoxDecoration(
+                        color: ColorsManager.white.withValues(alpha: 0.2),
+                        shape: BoxShape.circle,
+                      ),
+                      child: Icon(Icons.shopping_bag_outlined,
+                          color: ColorsManager.white, size: 20.sp),
                     ),
-                    child: Icon(Icons.shopping_bag_outlined, color: ColorsManager.white, size: 20.sp),
-                  ),
-                  Text(
-                    'View Cart & Checkout',
-                    style: AppTextStyle.font16WhiteSemiBold,
-                  ),
-                  Icon(Icons.arrow_forward_ios, color: ColorsManager.white, size: 16.sp),
-                ],
-              ),
+                    Text(
+                      'View Cart & Checkout',
+                      style: AppTextStyle.font16WhiteSemiBold,
+                    ),
+                    Icon(Icons.arrow_forward_ios,
+                        color: ColorsManager.white, size: 16.sp),
+                  ],
+                ),
         ),
       ),
     );

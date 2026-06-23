@@ -31,7 +31,7 @@ class WelcomePage extends StatelessWidget {
                     shape: BoxShape.circle,
                     boxShadow: [
                       BoxShadow(
-                        color: ColorsManager.primary.withOpacity(0.2),
+                        color: ColorsManager.primary.withValues(alpha: 0.2),
                         blurRadius: 20,
                         offset: const Offset(0, 10),
                       ),

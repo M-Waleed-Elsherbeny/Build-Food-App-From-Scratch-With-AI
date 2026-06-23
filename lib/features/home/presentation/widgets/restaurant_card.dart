@@ -21,7 +21,7 @@ class RestaurantCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = context.isDarkMode;
-    
+
     return GestureDetector(
       onTap: onTap,
       child: Container(
@@ -31,7 +31,7 @@ class RestaurantCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(16.r),
           boxShadow: [
             BoxShadow(
-              color: ColorsManager.black.withOpacity(isDark ? 0.3 : 0.05),
+              color: ColorsManager.black.withValues(alpha: isDark ? 0.3 : 0.05),
               blurRadius: 10,
               offset: const Offset(0, 4),
             ),
@@ -43,7 +43,8 @@ class RestaurantCard extends StatelessWidget {
             Stack(
               children: [
                 ClipRRect(
-                  borderRadius: BorderRadius.vertical(top: Radius.circular(16.r)),
+                  borderRadius:
+                      BorderRadius.vertical(top: Radius.circular(16.r)),
                   child: Image.network(
                     restaurant.imageUrl,
                     width: double.infinity,
@@ -52,8 +53,11 @@ class RestaurantCard extends StatelessWidget {
                     errorBuilder: (context, error, stackTrace) => Container(
                       width: double.infinity,
                       height: 140.h,
-                      color: isDark ? ColorsManager.grey800 : ColorsManager.grey200,
-                      child: Icon(Icons.restaurant, color: ColorsManager.grey400),
+                      color: isDark
+                          ? ColorsManager.grey800
+                          : ColorsManager.grey200,
+                      child:
+                          const Icon(Icons.restaurant, color: ColorsManager.grey400),
                     ),
                   ),
                 ),
@@ -61,18 +65,25 @@ class RestaurantCard extends StatelessWidget {
                   top: 12.h,
                   right: 12.w,
                   child: Container(
-                    padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
                     decoration: BoxDecoration(
                       color: context.colorScheme.surface,
                       borderRadius: BorderRadius.circular(20.r),
                     ),
                     child: Row(
                       children: [
-                        Icon(Icons.star, color: ColorsManager.warning, size: 14.sp),
+                        Icon(Icons.star,
+                            color: ColorsManager.warning, size: 14.sp),
                         SizedBox(width: 4.w),
                         Text(
                           restaurant.rating.toString(),
-                          style: (isDark ? AppTextStyle.font12Grey500Regular.copyWith(color: ColorsManager.white) : AppTextStyle.font12Grey500Regular.copyWith(color: ColorsManager.grey900)).copyWith(
+                          style: (isDark
+                                  ? AppTextStyle.font12Grey500Regular
+                                      .copyWith(color: ColorsManager.white)
+                                  : AppTextStyle.font12Grey500Regular
+                                      .copyWith(color: ColorsManager.grey900))
+                              .copyWith(
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -89,7 +100,10 @@ class RestaurantCard extends StatelessWidget {
                 children: [
                   Text(
                     restaurant.name,
-                    style: isDark ? AppTextStyle.font16WhiteSemiBold : AppTextStyle.font16WhiteSemiBold.copyWith(color: ColorsManager.grey900),
+                    style: isDark
+                        ? AppTextStyle.font16WhiteSemiBold
+                        : AppTextStyle.font16WhiteSemiBold
+                            .copyWith(color: ColorsManager.grey900),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -101,10 +115,13 @@ class RestaurantCard extends StatelessWidget {
                   SizedBox(height: 8.h),
                   Row(
                     children: [
-                      Icon(Icons.delivery_dining, color: ColorsManager.primary, size: 16.sp),
+                      Icon(Icons.delivery_dining,
+                          color: ColorsManager.primary, size: 16.sp),
                       SizedBox(width: 4.w),
                       Text(
-                        restaurant.deliveryFee == 0 ? tr('free_delivery') : '\$${restaurant.deliveryFee.toStringAsFixed(2)}',
+                        restaurant.deliveryFee == 0
+                            ? tr('free_delivery')
+                            : '\$${restaurant.deliveryFee.toStringAsFixed(2)}',
                         style: AppTextStyle.font12Grey500Regular.copyWith(
                           color: ColorsManager.primary,
                           fontWeight: FontWeight.w600,

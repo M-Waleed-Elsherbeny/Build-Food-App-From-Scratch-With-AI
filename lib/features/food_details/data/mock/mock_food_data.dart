@@ -3,7 +3,7 @@ import 'package:food_app/features/food_details/data/models/customization_model.d
 import 'package:food_app/features/food_details/data/models/food_details_model.dart';
 
 class MockFoodData {
-  static final FoodDetailsModel margheritaPizza = FoodDetailsModel(
+  static final FoodDetailsModel margheritaPizza = const FoodDetailsModel(
     id: '1',
     name: 'Margherita Pizza',
     image: 'https://images.unsplash.com/photo-1574071318508-1cdbab80d002?q=80&w=500&auto=format&fit=crop', // Provide a real or placeholder URL

@@ -20,7 +20,7 @@ class FavoritesEmptyState extends StatelessWidget {
               width: 120.w,
               height: 120.w,
               decoration: BoxDecoration(
-                color: ColorsManager.primary.withOpacity(0.1),
+                color: ColorsManager.primary.withValues(alpha: 0.1),
                 shape: BoxShape.circle,
               ),
               child: Icon(

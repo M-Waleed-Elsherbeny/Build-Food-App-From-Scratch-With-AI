@@ -21,7 +21,7 @@ class CartItemWidget extends StatelessWidget {
         borderRadius: BorderRadius.circular(16.r),
         boxShadow: [
           BoxShadow(
-            color: ColorsManager.grey900.withOpacity(0.04),
+            color: ColorsManager.grey900.withValues(alpha: 0.04),
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),
@@ -104,6 +104,7 @@ class CartItemWidget extends StatelessWidget {
       child: Container(
         width: 32.w,
         height: 32.h,
+        // ignore: prefer_const_constructors
         decoration: BoxDecoration(
           color: ColorsManager.grey100,
           shape: BoxShape.circle,

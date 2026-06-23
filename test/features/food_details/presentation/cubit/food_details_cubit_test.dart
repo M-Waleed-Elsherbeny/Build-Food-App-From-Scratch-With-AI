@@ -41,7 +41,7 @@ void main() {
       basePrice: 10.0,
       restaurantName: 'Test Pizzeria',
       addons: [
-        AddonModel(id: '1', name: 'Cheese', price: 2.0),
+        const AddonModel(id: '1', name: 'Cheese', price: 2.0),
       ],
     );
   });
@@ -108,12 +108,12 @@ void main() {
       'toggles addons and updates selectedAddons list',
       build: () => foodDetailsCubit,
       act: (cubit) {
-        final addon = AddonModel(id: '1', name: 'Cheese', price: 2.0);
+        final addon = const AddonModel(id: '1', name: 'Cheese', price: 2.0);
         cubit.toggleAddon(addon);
         cubit.toggleAddon(addon);
       },
       expect: () => [
-        FoodDetailsState(selectedAddons: [AddonModel(id: '1', name: 'Cheese', price: 2.0)]),
+        const FoodDetailsState(selectedAddons: [AddonModel(id: '1', name: 'Cheese', price: 2.0)]),
         const FoodDetailsState(selectedAddons: []),
       ],
     );

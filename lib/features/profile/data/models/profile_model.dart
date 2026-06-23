@@ -63,20 +63,20 @@ class ProfileModel extends UserModel with EquatableMixin {
   
   /// Helper to generate default mock profile.
   factory ProfileModel.mock() {
-    return ProfileModel(
+    return const ProfileModel(
       id: '1',
       name: 'Waleed Ahmed',
       email: 'waleed.ahmed@foodiego.com',
       phone: '+1 (555) 012-3456',
       avatar: 'http://localhost:3845/assets/974fe84cc68cbc4839607d5f67a91ae17be70761.png',
       addresses: [
-        const AddressModel(
+        AddressModel(
           id: '1',
           title: 'Home',
           addressLine: '123 Orange Street, Heliopolis, Cairo',
           isDefault: true,
         ),
-        const AddressModel(
+        AddressModel(
           id: '2',
           title: 'Work',
           addressLine: 'Smart Village, Building B-12, Giza',

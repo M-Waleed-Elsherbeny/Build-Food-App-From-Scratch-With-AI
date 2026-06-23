@@ -124,7 +124,7 @@ class _SplashPageState extends State<SplashPage> with SingleTickerProviderStateM
                       Text(
                         'Delicious food, delivered fast',
                         style: context.textTheme.bodyLarge?.copyWith(
-                          color: ColorsManager.white.withOpacity(0.9),
+                          color: ColorsManager.white.withValues(alpha: 0.9),
                           fontWeight: FontWeight.w500,
                         ),
                       ),

@@ -30,7 +30,7 @@ class CartCheckoutBottomBar extends StatelessWidget {
               color: ColorsManager.white,
               boxShadow: [
                 BoxShadow(
-                  color: ColorsManager.grey900.withOpacity(0.08),
+                  color: ColorsManager.grey900.withValues(alpha: 0.08),
                   blurRadius: 20,
                   offset: const Offset(0, -4),
                 ),

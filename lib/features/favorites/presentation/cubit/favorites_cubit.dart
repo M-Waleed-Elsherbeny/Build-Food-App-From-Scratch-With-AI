@@ -15,13 +15,22 @@ class FavoritesCubit extends Cubit<FavoritesState> {
     final result = await _repository.getFavorites();
     result.fold(
       (failure) => emit(state.copyWith(
-        status: FavoritesStatus.failure,
+        status: FavoritesStatus.error,
         errorMsg: failure.message,
       )),
-      (favorites) => emit(state.copyWith(
-        status: FavoritesStatus.success,
-        favorites: favorites,
-      )),
+      (favorites) {
+        if (favorites.isEmpty) {
+          emit(state.copyWith(
+            status: FavoritesStatus.empty,
+            favorites: favorites,
+          ));
+        } else {
+          emit(state.copyWith(
+            status: FavoritesStatus.loaded,
+            favorites: favorites,
+          ));
+        }
+      },
     );
   }
 
@@ -30,11 +39,11 @@ class FavoritesCubit extends Cubit<FavoritesState> {
     final result = await _repository.addFavorite(item);
     result.fold(
       (failure) => emit(state.copyWith(
-        status: FavoritesStatus.failure,
+        status: FavoritesStatus.error,
         errorMsg: failure.message,
       )),
       (favorites) => emit(state.copyWith(
-        status: FavoritesStatus.success,
+        status: FavoritesStatus.favoriteAdded,
         favorites: favorites,
       )),
     );
@@ -45,13 +54,14 @@ class FavoritesCubit extends Cubit<FavoritesState> {
     final result = await _repository.removeFavorite(itemId);
     result.fold(
       (failure) => emit(state.copyWith(
-        status: FavoritesStatus.failure,
+        status: FavoritesStatus.error,
         errorMsg: failure.message,
       )),
       (favorites) => emit(state.copyWith(
-        status: FavoritesStatus.success,
+        status: FavoritesStatus.favoriteRemoved,
         favorites: favorites,
       )),
     );
   }
 }
+

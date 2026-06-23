@@ -41,9 +41,10 @@ class OfferBanner extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Container(
-                    padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
                     decoration: BoxDecoration(
-                      color: ColorsManager.white.withOpacity(0.2),
+                      color: ColorsManager.white.withValues(alpha: 0.2),
                       borderRadius: BorderRadius.circular(8.r),
                     ),
                     child: Text(
@@ -57,12 +58,14 @@ class OfferBanner extends StatelessWidget {
                   SizedBox(height: 8.h),
                   Text(
                     offer.title,
-                    style: AppTextStyle.font20Grey900Bold.copyWith(color: ColorsManager.white),
+                    style: AppTextStyle.font20Grey900Bold
+                        .copyWith(color: ColorsManager.white),
                   ),
                   SizedBox(height: 4.h),
                   Text(
                     offer.description,
-                    style: AppTextStyle.font12Grey500Regular.copyWith(color: ColorsManager.white.withOpacity(0.9)),
+                    style: AppTextStyle.font12Grey500Regular.copyWith(
+                        color: ColorsManager.white.withValues(alpha: 0.9)),
                   ),
                 ],
               ),

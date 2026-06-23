@@ -60,7 +60,7 @@ class FakeSearchRepository implements SearchRepository {
   Future<Either<Failure, List<String>>> getTrendingSearches() async {
     try {
       await _delay();
-      return Right(MockSearchData.trendingSearches);
+      return const Right(MockSearchData.trendingSearches);
     } catch (e) {
       return Left(ServerFailure(e.toString()));
     }

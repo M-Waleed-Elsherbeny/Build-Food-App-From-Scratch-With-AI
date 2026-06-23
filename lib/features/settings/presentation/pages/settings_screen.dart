@@ -82,7 +82,7 @@ class SettingsScreen extends StatelessWidget {
     return Column(
       children: [
         SwitchListTile(
-          activeColor: ColorsManager.primary,
+          activeThumbColor : ColorsManager.primary,
           title: Text('Push Notifications', style: isDark ? AppTextStyle.font16WhiteRegular : AppTextStyle.font16Grey700Regular),
           value: settings?.pushNotifications ?? true,
           onChanged: (val) {
@@ -91,7 +91,7 @@ class SettingsScreen extends StatelessWidget {
         ),
         Divider(height: 1, color: ColorsManager.grey100, indent: 16.w, endIndent: 16.w),
         SwitchListTile(
-          activeColor: ColorsManager.primary,
+          activeThumbColor : ColorsManager.primary,
           title: Text('Promotional Emails', style: isDark ? AppTextStyle.font16WhiteRegular : AppTextStyle.font16Grey700Regular),
           value: settings?.promoEmails ?? false,
           onChanged: (val) {

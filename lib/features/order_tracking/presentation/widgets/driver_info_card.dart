@@ -22,7 +22,7 @@ class DriverInfoCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(16.r),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(isDark ? 0.3 : 0.05),
+            color: Colors.black.withValues(alpha: isDark ? 0.3 : 0.05),
             blurRadius: 8,
             offset: const Offset(0, 2),
           ),
@@ -49,13 +49,15 @@ class DriverInfoCard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Your Delivery Driver', style: AppTextStyle.font12Grey500Regular),
+                Text('Your Delivery Driver',
+                    style: AppTextStyle.font12Grey500Regular),
                 SizedBox(height: 4.h),
                 Text(driver.name, style: AppTextStyle.font16Grey900Medium),
                 SizedBox(height: 4.h),
                 Row(
                   children: [
-                    Icon(Icons.star_rounded, color: ColorsManager.warning, size: 14.sp),
+                    Icon(Icons.star_rounded,
+                        color: ColorsManager.warning, size: 14.sp),
                     SizedBox(width: 4.w),
                     Text(
                       '${driver.rating.toStringAsFixed(1)} · ${driver.ratingsCount}',
@@ -71,13 +73,29 @@ class DriverInfoCard extends StatelessWidget {
             children: [
               _buildActionButton(
                 icon: Icons.chat_bubble_outline_rounded,
-                onTap: () {},
+                onTap: () {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(
+                          'Chat with ${driver.name} is not available right now.'),
+                      backgroundColor: ColorsManager.grey700,
+                    ),
+                  );
+                },
                 isDark: isDark,
               ),
               SizedBox(width: 8.w),
               _buildActionButton(
                 icon: Icons.call_outlined,
-                onTap: () {},
+                onTap: () {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content:
+                          Text('Calling ${driver.name} (${driver.phone})...'),
+                      backgroundColor: ColorsManager.primary,
+                    ),
+                  );
+                },
                 isDark: isDark,
                 isPrimary: true,
               ),
@@ -100,13 +118,17 @@ class DriverInfoCard extends StatelessWidget {
         width: 40.w,
         height: 40.w,
         decoration: BoxDecoration(
-          color: isPrimary ? ColorsManager.primary : (isDark ? ColorsManager.grey700 : ColorsManager.grey100),
+          color: isPrimary
+              ? ColorsManager.primary
+              : (isDark ? ColorsManager.grey700 : ColorsManager.grey100),
           shape: BoxShape.circle,
         ),
         child: Icon(
           icon,
           size: 18.sp,
-          color: isPrimary ? ColorsManager.white : (isDark ? ColorsManager.grey300 : ColorsManager.grey700),
+          color: isPrimary
+              ? ColorsManager.white
+              : (isDark ? ColorsManager.grey300 : ColorsManager.grey700),
         ),
       ),
     );
@@ -120,7 +142,8 @@ class DriverInfoCard extends StatelessWidget {
         color: ColorsManager.grey200,
         shape: BoxShape.circle,
       ),
-      child: Icon(Icons.person_rounded, color: ColorsManager.grey500, size: 28.sp),
+      child:
+          Icon(Icons.person_rounded, color: ColorsManager.grey500, size: 28.sp),
     );
   }
 }

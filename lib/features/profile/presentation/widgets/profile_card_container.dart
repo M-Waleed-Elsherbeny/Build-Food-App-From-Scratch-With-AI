@@ -15,19 +15,20 @@ class ProfileCardContainer extends StatelessWidget {
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
-        color: isDark 
-            ? ColorsManager.grey900.withOpacity(0.7) 
-            : ColorsManager.white.withOpacity(0.7),
+        color: isDark
+            ? ColorsManager.grey900.withValues(alpha: 0.7)
+            : ColorsManager.white.withValues(alpha: 0.7),
         borderRadius: BorderRadius.circular(32.r),
         border: Border.all(
-          color: isDark 
-              ? ColorsManager.grey800.withOpacity(0.5) 
-              : ColorsManager.white.withOpacity(0.5),
+          color: isDark
+              ? ColorsManager.grey800.withValues(alpha: 0.5)
+              : ColorsManager.white.withValues(alpha: 0.5),
           width: 1.r,
         ),
         boxShadow: [
           BoxShadow(
-            color: ColorsManager.primary.withOpacity(isDark ? 0.04 : 0.12),
+            color:
+                ColorsManager.primary.withValues(alpha: isDark ? 0.04 : 0.12),
             offset: Offset(0, 10.h),
             blurRadius: 40.r,
             spreadRadius: -10.r,

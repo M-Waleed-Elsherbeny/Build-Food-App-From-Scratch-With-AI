@@ -14,10 +14,10 @@ class AddressModel {
   /// Factory constructor to parse an [AddressModel] from JSON.
   factory AddressModel.fromJson(Map<String, dynamic> json) {
     return AddressModel(
-      id: json['id'] as String,
-      title: json['title'] as String,
-      addressLine: json['addressLine'] as String,
-      isDefault: json['isDefault'] as bool? ?? false,
+      id: json['id'] as String? ?? '',
+      title: json['title'] as String? ?? '',
+      addressLine: json['address_line'] as String? ?? json['addressLine'] as String? ?? '',
+      isDefault: json['is_default'] as bool? ?? json['isDefault'] as bool? ?? false,
     );
   }
 
@@ -26,8 +26,8 @@ class AddressModel {
     return {
       'id': id,
       'title': title,
-      'addressLine': addressLine,
-      'isDefault': isDefault,
+      'address_line': addressLine,
+      'is_default': isDefault,
     };
   }
 

@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
 import '../../../../core/errors/failures.dart';
-import '../models/user_model.dart';
+import '../../../../core/models/user_model.dart';
 
 /// Repository interface for authentication operations.
 abstract class AuthRepository {

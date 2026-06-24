@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../core/routes/app_router.dart';
 import '../../../../core/theme/colors_manager.dart';
+import '../../../../core/utils/custom_snack_bar.dart';
 import '../../../../core/theme/app_theme.dart';
 import '../../../../core/utils/app_validator.dart';
 import '../../../../core/widgets/custom_text_field.dart';
@@ -36,15 +37,11 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
     return BlocListener<AuthCubit, AuthState>(
       listener: (context, state) {
         if (state.status == AuthStatus.success) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Password reset successful. Please login.')),
-          );
+          customSnackBar(context, message: 'Password reset successful. Please login.', isError: false);
           context.go(AppRoutes.login);
           context.read<AuthCubit>().resetStatus();
         } else if (state.status == AuthStatus.failure) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(state.error ?? 'Failed to reset password')),
-          );
+          customSnackBar(context, message: state.error ?? 'Failed to reset password');
         }
       },
       child: Scaffold(

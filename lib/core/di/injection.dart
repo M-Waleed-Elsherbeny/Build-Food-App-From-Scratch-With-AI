@@ -28,7 +28,7 @@ import '../../features/cart/data/repositories/cart_repository.dart';
 import '../../features/cart/data/repositories/fake_cart_repository.dart';
 import '../../features/cart/presentation/cubit/cart_cubit.dart';
 import '../../features/profile/data/repositories/profile_repository.dart';
-import '../../features/profile/data/repositories/fake_profile_repository.dart';
+import '../../features/profile/data/repositories/profile_repository_impl.dart';
 import '../../features/profile/presentation/cubit/profile_cubit.dart';
 import '../../features/food_details/data/repositories/food_details_repository.dart';
 import '../../features/food_details/data/repositories/fake_food_details_repository.dart';
@@ -43,6 +43,7 @@ import '../../features/order_history/data/repositories/order_history_repository.
 import '../../features/order_history/data/repositories/fake_order_history_repository.dart';
 import '../../features/order_history/presentation/cubit/order_history_cubit.dart';
 import '../../features/order_history/presentation/cubit/order_success_cubit.dart';
+import '../../features/splash/presentation/cubit/splash_cubit.dart';
 
 final GetIt getIt = GetIt.instance;
 
@@ -95,6 +96,11 @@ Future<void> configureDependencies() async {
   // Cubits
   getIt.registerFactory(() => AuthCubit(getIt()));
 
+  // --- Splash Feature ---
+  getIt.registerFactory(
+    () => SplashCubit(getIt<OnboardingRepository>(), getIt<AuthRepository>()),
+  );
+
   // --- Home Feature ---
 
   // Datasources
@@ -128,7 +134,7 @@ Future<void> configureDependencies() async {
 
   // --- Profile Feature ---
   getIt.registerLazySingleton<ProfileRepository>(
-    () => FakeProfileRepository(),
+    () => ProfileRepositoryImpl(getIt()),
   );
   getIt.registerFactory(() => ProfileCubit(getIt()));
 

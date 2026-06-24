@@ -23,7 +23,7 @@ class LoginPage extends StatelessWidget {
           onPressed: () => context.canPop() ? context.pop() : null,
         ),
       ),
-      body: const SingleChildScrollView(child: const _LoginPageBody()),
+      body: const SingleChildScrollView(child: _LoginPageBody()),
     );
   }
 }
@@ -36,11 +36,11 @@ class _LoginPageBody extends StatelessWidget {
     return BlocListener<AuthCubit, AuthState>(
       listener: (context, state) {
         if (state.status == AuthStatus.success) {
-          customSnackBar(context, message: state.error!);
+          customSnackBar(context, message: 'Welcome back!', isError: false);
           context.go(AppRoutes.main);
           // context.read<AuthCubit>().resetStatus();
         } else if (state.status == AuthStatus.failure) {
-          return customSnackBar(context, message: state.error!);
+          customSnackBar(context, message: state.error!);
         }
       },
       child: SafeArea(

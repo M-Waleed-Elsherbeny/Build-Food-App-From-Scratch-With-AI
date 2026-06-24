@@ -4,7 +4,7 @@ import '../../../../core/errors/failures.dart';
 import '../../../../core/services/session_manager.dart';
 import '../datasources/supabase_auth_datasource.dart';
 import '../mappers/auth_mapper.dart';
-import '../models/user_model.dart';
+import '../../../../core/models/user_model.dart';
 import 'auth_repository.dart';
 
 /// Implementation of [AuthRepository] using Supabase authentication.

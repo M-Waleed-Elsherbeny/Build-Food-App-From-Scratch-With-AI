@@ -23,7 +23,7 @@ class SignupPage extends StatelessWidget {
           onPressed: () => context.pop(),
         ),
       ),
-      body: const SingleChildScrollView(child: const _SignupPageBody()),
+      body: const SingleChildScrollView(child: _SignupPageBody()),
     );
   }
 }
@@ -36,11 +36,11 @@ class _SignupPageBody extends StatelessWidget {
     return BlocListener<AuthCubit, AuthState>(
       listener: (context, state) {
         if (state.status == AuthStatus.success && state.user != null) {
-          // Pass email to OTP page
+          customSnackBar(context, message: 'Registration successful! Verification code sent.', isError: false);
           context.push(AppRoutes.otp, extra: state.user!.email);
           context.read<AuthCubit>().resetStatus();
         } else if (state.status == AuthStatus.failure) {
-          return customSnackBar(context, message: state.error!);
+          customSnackBar(context, message: state.error!);
         }
       },
       child: SafeArea(

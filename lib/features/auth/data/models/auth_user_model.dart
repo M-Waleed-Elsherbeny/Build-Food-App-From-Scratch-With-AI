@@ -23,8 +23,8 @@ class AuthUserModel {
     return AuthUserModel(
       id: user.id,
       email: user.email ?? '',
-      name: metadata?['name'] as String?,
-      avatar: metadata?['avatar'] as String?,
+      name: metadata?['full_name'] as String? ?? metadata?['name'] as String?,
+      avatar: metadata?['avatar_url'] as String? ?? metadata?['avatar'] as String?,
       metadata: metadata,
     );
   }

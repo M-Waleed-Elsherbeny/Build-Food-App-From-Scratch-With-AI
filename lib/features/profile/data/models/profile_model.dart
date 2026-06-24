@@ -1,4 +1,4 @@
-import '../../../auth/data/models/user_model.dart';
+import '../../../../core/models/user_model.dart';
 import 'address_model.dart';
 import 'package:equatable/equatable.dart';
 
@@ -23,11 +23,11 @@ class ProfileModel extends UserModel with EquatableMixin {
         .toList();
 
     return ProfileModel(
-      id: json['id'] as String? ?? '',
+      id: json['id'] as String? ?? json['user_id'] as String? ?? '',
       email: json['email'] as String? ?? '',
-      name: json['name'] as String?,
-      avatar: json['avatar'] as String?,
-      phone: json['phone'] as String? ?? '',
+      name: json['full_name'] as String? ?? json['name'] as String?,
+      avatar: json['avatar_url'] as String? ?? json['avatar'] as String?,
+      phone: json['phone_number'] as String? ?? json['phone'] as String? ?? '',
       addresses: addresses,
     );
   }
@@ -35,10 +35,14 @@ class ProfileModel extends UserModel with EquatableMixin {
   /// Converts this [ProfileModel] to JSON.
   @override
   Map<String, dynamic> toJson() {
-    final data = super.toJson();
-    data['phone'] = phone;
-    data['addresses'] = addresses.map((e) => e.toJson()).toList();
-    return data;
+    return {
+      'id': id,
+      'email': email,
+      'full_name': name,
+      'avatar_url': avatar,
+      'phone_number': phone,
+      'addresses': addresses.map((e) => e.toJson()).toList(),
+    };
   }
 
   /// Creates a copy of this [ProfileModel] with the given fields replaced.

@@ -12,6 +12,7 @@ import '../../features/auth/presentation/pages/signup_page.dart';
 import '../../features/auth/presentation/pages/otp_page.dart';
 import '../../features/auth/presentation/pages/forgot_password_page.dart';
 import '../../features/auth/presentation/pages/reset_password_page.dart';
+import '../../features/splash/presentation/cubit/splash_cubit.dart';
 import '../../features/splash/presentation/pages/splash_page.dart';
 import '../../features/home/presentation/pages/home_page.dart';
 import '../../features/search/presentation/pages/search_screen.dart';
@@ -59,7 +60,10 @@ class AppRouter {
     routes: [
       GoRoute(
         path: AppRoutes.splash,
-        builder: (context, state) => const SplashPage(),
+        builder: (context, state) => BlocProvider(
+          create: (context) => getIt<SplashCubit>(),
+          child: const SplashPage(),
+        ),
       ),
       GoRoute(
         path: AppRoutes.onboarding,

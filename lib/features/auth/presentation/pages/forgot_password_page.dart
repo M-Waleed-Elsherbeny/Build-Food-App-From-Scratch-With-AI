@@ -6,6 +6,7 @@ import '../../../../core/routes/app_router.dart';
 import '../../../../core/theme/app_theme.dart';
 import '../../../../core/theme/colors_manager.dart';
 import '../../../../core/utils/app_validator.dart';
+import '../../../../core/utils/custom_snack_bar.dart';
 import '../../../../core/widgets/custom_text_field.dart';
 import '../../../../core/widgets/primary_button.dart';
 import '../cubit/auth_cubit.dart';
@@ -36,9 +37,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
           context.push(AppRoutes.otp, extra: _emailController.text.trim());
           context.read<AuthCubit>().resetStatus();
         } else if (state.status == AuthStatus.failure) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(state.error ?? 'Failed to send reset code')),
-          );
+          customSnackBar(context, message: state.error ?? 'Failed to send reset code');
         }
       },
       child: Scaffold(

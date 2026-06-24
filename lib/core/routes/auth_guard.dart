@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:food_app/core/routes/app_router.dart';
 import 'package:go_router/go_router.dart';
 import '../di/injection.dart';
 import '../../features/auth/data/repositories/auth_repository.dart';
@@ -29,7 +30,7 @@ class _AuthGuardState extends State<AuthGuard> {
     if (!mounted) return;
 
     if (!isAuthenticated) {
-      context.go('/welcome');
+      context.go(AppRoutes.welcome);
       return;
     }
 

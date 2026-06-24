@@ -3,7 +3,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import '../../../../core/errors/failures.dart';
 import '../../../../core/constants/app_constants.dart';
-import '../models/user_model.dart';
+import '../../../../core/models/user_model.dart';
 import '../datasources/auth_api_service.dart';
 import 'auth_repository.dart';
 

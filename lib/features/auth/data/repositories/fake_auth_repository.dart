@@ -2,7 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import '../../../../core/errors/failures.dart';
 import '../../../../core/constants/app_constants.dart';
-import '../models/user_model.dart';
+import '../../../../core/models/user_model.dart';
 import 'auth_repository.dart';
 
 /// Fake implementation of [AuthRepository] for demo and local testing.

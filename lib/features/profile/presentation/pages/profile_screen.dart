@@ -267,18 +267,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 child: CircleAvatar(
                   radius: 60.r,
                   backgroundColor: ColorsManager.grey200,
-                  backgroundImage: profile.avatar != null &&
-                          profile.avatar!.startsWith('http')
+                  backgroundImage: profile.avatar!.isNotEmpty
                       ? NetworkImage(profile.avatar!)
                       : null,
-                  child: profile.avatar == null
-                      ? Icon(Icons.person,
-                          size: 50.sp, color: ColorsManager.grey500)
-                      : null,
-                  onBackgroundImageError: (exception, stackTrace) => Icon(
-                      Icons.person,
-                      size: 50.sp,
-                      color: ColorsManager.grey500),
+                  child: Icon(
+                    Icons.person,
+                    size: 50.sp,
+                    color: ColorsManager.grey500,
+                  ),
                 ),
               ),
             ),

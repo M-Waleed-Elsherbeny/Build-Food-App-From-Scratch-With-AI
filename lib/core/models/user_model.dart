@@ -16,7 +16,7 @@ class UserModel {
       id: json['id'] as String? ?? json['user_id'] as String? ?? '',
       email: json['email'] as String? ?? '',
       name: json['full_name'] as String? ?? json['name'] as String?,
-      avatar: json['avatar_url'] as String? ?? json['avatar'] as String?,
+      avatar: json['avatar_url'] as String? ?? "",
     );
   }
 

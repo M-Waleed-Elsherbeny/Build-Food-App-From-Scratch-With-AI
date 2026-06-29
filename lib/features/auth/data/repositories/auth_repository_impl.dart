@@ -1,28 +1,37 @@
+import 'dart:convert';
+
 import 'package:dartz/dartz.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:food_app/core/constants/app_constants.dart';
+import 'package:food_app/core/errors/failures.dart';
+import 'package:food_app/core/models/user_model.dart';
+import 'package:food_app/features/auth/data/datasources/supabase_auth_datasource.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import '../../../../core/errors/failures.dart';
-import '../../../../core/services/session_manager.dart';
-import '../datasources/supabase_auth_datasource.dart';
-import '../mappers/auth_mapper.dart';
-import '../../../../core/models/user_model.dart';
 import 'auth_repository.dart';
 
 /// Implementation of [AuthRepository] using Supabase authentication.
 class AuthRepositoryImpl implements AuthRepository {
   final SupabaseAuthDatasource _datasource;
-  final SessionManager _sessionManager;
+  // final SessionManager _sessionManager;
+  final FlutterSecureStorage _storage;
+
 
   AuthRepositoryImpl(
     this._datasource,
-    this._sessionManager,
+    //this._sessionManager,
+    this._storage
   );
 
   @override
   Future<Either<Failure, UserModel>> login(
       String email, String password) async {
     try {
-      final authUser = await _datasource.login(email, password);
-      return Right(authUser.toDomain());
+      final userModel = await _datasource.login(email, password);
+      final user = await _storage.read(key: AppConstants.userSessionKey);
+      if (user == null){
+        return const Left(ServerFailure('Login failed. Please Create Account First.'));
+      }
+      return Right(userModel);
     } on AuthException catch (error) {
       return Left(ServerFailure(error.message));
     } catch (_) {
@@ -37,12 +46,13 @@ class AuthRepositoryImpl implements AuthRepository {
     required String password,
   }) async {
     try {
-      final authUser = await _datasource.register(
+      final userModel = await _datasource.register(
         name: name,
         email: email,
         password: password,
       );
-      return Right(authUser.toDomain());
+      await _storage.write(key: AppConstants.userSessionKey, value: json.encode(userModel.toJson()));
+      return Right(userModel);
     } on AuthException catch (error) {
       return Left(ServerFailure(error.message));
     } catch (_) {
@@ -100,8 +110,8 @@ class AuthRepositoryImpl implements AuthRepository {
     }
   }
 
-  @override
-  Future<bool> isAuthenticated() async {
-    return _sessionManager.isAuthenticatedAsync();
-  }
+  // @override
+  // Future<bool> isAuthenticated() async {
+  //   return _sessionManager.isAuthenticatedAsync();
+  // }
 }

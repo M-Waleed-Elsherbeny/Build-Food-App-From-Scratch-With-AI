@@ -1,22 +1,34 @@
-class UserModel {
+import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:equatable/equatable.dart';
+
+class UserModel extends Equatable {
   final String id;
   final String email;
-  final String? name;
-  final String? avatar;
+  final String name;
+  final String avatar;
 
   const UserModel({
     required this.id,
     required this.email,
-    this.name,
-    this.avatar,
+    required this.name,
+    required this.avatar,
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
     return UserModel(
-      id: json['id'] as String? ?? json['user_id'] as String? ?? '',
-      email: json['email'] as String? ?? '',
-      name: json['full_name'] as String? ?? json['name'] as String?,
-      avatar: json['avatar_url'] as String? ?? "",
+      id: json['id'] ?? '',
+      email: json['email'] ?? '',
+      name: json['full_name'] ?? "",
+      avatar: json['avatar_url'] ?? "",
+    );
+  }
+
+  factory UserModel.fromUser({required User user, String? name}) {
+    return UserModel(
+      id: user.id,
+      email: user.email ?? '',
+      name: name ?? "Unknown Name",
+      avatar: user.userMetadata?['avatar_url'] as String? ?? "",
     );
   }
 
@@ -42,5 +54,7 @@ class UserModel {
       avatar: avatar ?? this.avatar,
     );
   }
-}
 
+  @override
+  List<Object?> get props => [id, email, name, avatar];
+}

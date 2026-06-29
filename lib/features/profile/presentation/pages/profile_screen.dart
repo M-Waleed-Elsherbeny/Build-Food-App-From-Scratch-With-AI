@@ -87,9 +87,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
           builder: (context, state) {
             final isLoading = state.status == ProfileStatus.loading;
             // When skeletonizer is enabled, provide mock placeholder data
-            final profile = isLoading
-                ? ProfileModel.mock()
-                : (state.profile ?? ProfileModel.mock());
+            // final profile = isLoading
+            //     ? ProfileModel.mock()
+            //     : (state.profile ?? ProfileModel.mock());
 
             return Skeletonizer(
               enabled: isLoading && state.profile == null,
@@ -101,7 +101,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   child: Column(
                     children: [
                       // Hero Section: Avatar & Info
-                      _buildHeroSection(context, profile, isDark),
+                      // _buildHeroSection(context, profile, isDark),
                       SizedBox(height: 24.h),
 
                       // First Menu Group

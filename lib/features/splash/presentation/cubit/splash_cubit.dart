@@ -30,10 +30,10 @@ class SplashCubit extends Cubit<SplashState> {
       return;
     }
 
-    final isAuthenticated = await _authRepository.isAuthenticated();
-    emit(state.copyWith(
-      status: SplashStatus.completed,
-      route: isAuthenticated ? AppRoutes.main : AppRoutes.welcome,
-    ));
+    // final isAuthenticated = await _authRepository.isAuthenticated();
+    // emit(state.copyWith(
+    //   status: SplashStatus.completed,
+    //   route: isAuthenticated ? AppRoutes.main : AppRoutes.welcome,
+    // ));
   }
 }

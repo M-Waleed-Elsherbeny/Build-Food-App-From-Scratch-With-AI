@@ -1,7 +1,7 @@
+import 'package:food_app/core/models/user_model.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' as supabase;
 
 import '../../../../core/errors/auth_exception.dart';
-import '../models/auth_user_model.dart';
 
 /// Datasource implementation that uses Supabase Auth for authentication.
 class SupabaseAuthDatasource {
@@ -9,47 +9,46 @@ class SupabaseAuthDatasource {
 
   SupabaseAuthDatasource(this._supabaseClient);
 
-  Future<AuthUserModel> login(String email, String password) async {
-    try {
-      final response = await _supabaseClient.auth.signInWithPassword(
-        email: email,
-        password: password,
-      );
+  Future<UserModel> login(String email, String password) async {
+    final response = await _supabaseClient.auth.signInWithPassword(
+      email: email,
+      password: password,
+    );
 
-      final user = response.user ?? _supabaseClient.auth.currentUser;
-      if (user == null) {
-        throw const AuthException('Login failed. User data is missing.');
-      }
-
-      return AuthUserModel.fromUser(user);
-    } catch (e) {
-      if (e is AuthException) rethrow;
-      throw AuthException(e.toString());
+    final user = response.user ?? _supabaseClient.auth.currentUser;
+    if (user == null) {
+      throw const AuthException('Login failed. User data is missing.');
     }
+    return UserModel.fromUser(user: user);
   }
 
-  Future<AuthUserModel> register({
+  Future<UserModel> register({
     required String name,
     required String email,
     required String password,
   }) async {
-    try {
-      final response = await _supabaseClient.auth.signUp(
-        email: email,
-        password: password,
-      );
+    final response = await _supabaseClient.auth.signUp(
+      email: email,
+      password: password,
+    );
 
-      final user = response.user ?? _supabaseClient.auth.currentUser;
-      if (user == null) {
-        throw const AuthException('Registration failed. User data is missing.');
-      }
+    // Fetch profile details
+    await _supabaseClient.from("profiles").insert({
+      "id": response.user!.id,
+      "email": email,
+      "full_name": name,
+      "avatar_url": "https://cdn-icons-png.flaticon.com/512/149/149071.png",
+    });
+    // final user = response.user ?? _supabaseClient.auth.currentUser;
+    // if (user == null) {
+    //   throw const AuthException('Registration failed. User data is missing.');
+    // }
 
-      // Optionally update metadata later if needed.
-      return AuthUserModel.fromUser(user);
-    } catch (e) {
-      if (e is AuthException) rethrow;
-      throw AuthException(e.toString());
-    }
+    // Optionally update metadata later if needed.
+    return UserModel.fromUser(
+      user: response.user!,
+      name: name,
+    );
   }
 
   Future<void> verifyOtp(String email, String otp) async {
@@ -59,20 +58,8 @@ class SupabaseAuthDatasource {
   }
 
   Future<void> forgotPassword(String email) async {
-    try {
-      // Try the most common SDK entry points for password reset. We call
-      // them in sequence and ignore NoSuchMethodErrors so this datasource
-      // stays compatible across SDK versions.
-      try {
-        await _supabaseClient.auth.resetPasswordForEmail(email);
-        return;
-      } catch (e) {
-        throw AuthException('Password reset failed: ${e.toString()}');
-      }
-    } catch (e) {
-      if (e is AuthException) rethrow;
-      throw AuthException(e.toString());
-    }
+    await _supabaseClient.auth.resetPasswordForEmail(email);
+    return;
   }
 
   Future<void> resetPassword(String newPassword) async {
@@ -84,23 +71,13 @@ class SupabaseAuthDatasource {
         'Password reset session is not available. Please complete the reset flow from the email link.',
       );
     }
-
-    try {
-      // Try to call updateUser dynamically; if it doesn't exist this will
-      // throw and be handled below.
-      final dynamic auth = _supabaseClient.auth;
-      await auth.updateUser({'password': newPassword});
-    } catch (e) {
-      if (e is AuthException) rethrow;
-      throw AuthException(e.toString());
-    }
+    // Try to call updateUser dynamically; if it doesn't exist this will
+    // throw and be handled below.
+    final dynamic auth = _supabaseClient.auth;
+    await auth.updateUser({'password': newPassword});
   }
 
   Future<void> signOut() async {
-    try {
-      await _supabaseClient.auth.signOut();
-    } catch (e) {
-      throw AuthException(e.toString());
-    }
+    await _supabaseClient.auth.signOut();
   }
 }

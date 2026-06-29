@@ -2,7 +2,6 @@ import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import '../network/api_client.dart';
 import '../services/session_manager.dart';
 import '../../features/onboarding/data/datasources/onboarding_local_datasource.dart';
 import '../../features/onboarding/data/repositories/onboarding_repository.dart';
@@ -11,7 +10,6 @@ import '../../features/auth/data/datasources/supabase_auth_datasource.dart';
 import '../../features/auth/data/repositories/auth_repository.dart';
 import '../../features/auth/data/repositories/auth_repository_impl.dart';
 import '../../features/auth/presentation/cubit/auth_cubit.dart';
-import '../../features/home/data/datasources/home_api_service.dart';
 import '../../features/home/data/repositories/home_repository.dart';
 import '../../features/home/data/repositories/fake_home_repository.dart';
 import '../../features/home/presentation/cubit/home_cubit.dart';
@@ -56,9 +54,6 @@ Future<void> configureDependencies() async {
   getIt.registerSingleton<SharedPreferences>(sharedPreferences);
   getIt.registerSingleton<FlutterSecureStorage>(secureStorage);
 
-  // Core
-  getIt.registerLazySingleton<ApiClient>(() => ApiClient(getIt()));
-
   // --- Onboarding Feature ---
 
   // Datasources
@@ -102,9 +97,6 @@ Future<void> configureDependencies() async {
   );
 
   // --- Home Feature ---
-
-  // Datasources
-  getIt.registerLazySingleton(() => HomeApiService(getIt()));
 
   // Repositories
   getIt.registerLazySingleton<HomeRepository>(

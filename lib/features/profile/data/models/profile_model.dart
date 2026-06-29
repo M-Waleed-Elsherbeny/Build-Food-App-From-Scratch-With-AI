@@ -9,8 +9,8 @@ class ProfileModel extends UserModel with EquatableMixin {
   const ProfileModel({
     required super.id,
     required super.email,
-    super.name,
-    super.avatar,
+    required super.name,
+    required super.avatar,
     required this.phone,
     required this.addresses,
   });
@@ -25,8 +25,8 @@ class ProfileModel extends UserModel with EquatableMixin {
     return ProfileModel(
       id: json['id'] as String? ?? json['user_id'] as String? ?? '',
       email: json['email'] as String? ?? '',
-      name: json['full_name'] as String? ?? json['name'] as String?,
-      avatar: json['avatar_url'] as String? ?? json['avatar'] as String?,
+      name: json['full_name'],
+      avatar: json['avatar_url'],
       phone: json['phone_number'] as String? ?? json['phone'] as String? ?? '',
       addresses: addresses,
     );
@@ -45,50 +45,51 @@ class ProfileModel extends UserModel with EquatableMixin {
     };
   }
 
-  /// Creates a copy of this [ProfileModel] with the given fields replaced.
-  @override
-  ProfileModel copyWith({
-    String? id,
-    String? email,
-    String? name,
-    String? avatar,
-    String? phone,
-    List<AddressModel>? addresses,
-  }) {
-    return ProfileModel(
-      id: id ?? this.id,
-      email: email ?? this.email,
-      name: name ?? this.name,
-      avatar: avatar ?? this.avatar,
-      phone: phone ?? this.phone,
-      addresses: addresses ?? this.addresses,
-    );
-  }
-  
-  /// Helper to generate default mock profile.
-  factory ProfileModel.mock() {
-    return const ProfileModel(
-      id: '1',
-      name: 'Waleed Ahmed',
-      email: 'waleed.ahmed@foodiego.com',
-      phone: '+1 (555) 012-3456',
-      avatar: 'http://localhost:3845/assets/974fe84cc68cbc4839607d5f67a91ae17be70761.png',
-      addresses: [
-        AddressModel(
-          id: '1',
-          title: 'Home',
-          addressLine: '123 Orange Street, Heliopolis, Cairo',
-          isDefault: true,
-        ),
-        AddressModel(
-          id: '2',
-          title: 'Work',
-          addressLine: 'Smart Village, Building B-12, Giza',
-          isDefault: false,
-        ),
-      ],
-    );
-  }
+  // /// Creates a copy of this [ProfileModel] with the given fields replaced.
+  // @override
+  // ProfileModel copyWith({
+  //   String? id,
+  //   String? email,
+  //   String? name,
+  //   String? avatar,
+  //   String? phone,
+  //   List<AddressModel>? addresses,
+  // }) {
+  //   return ProfileModel(
+  //     id: id ?? this.id,
+  //     email: email ?? this.email,
+  //     name: name ?? this.name,
+  //     avatar: avatar ?? this.avatar,
+  //     phone: phone ?? this.phone,
+  //     addresses: addresses ?? this.addresses,
+  //   );
+  // }
+
+  // /// Helper to generate default mock profile.
+  // factory ProfileModel.mock() {
+  //   return const ProfileModel(
+  //     id: '1',
+  //     name: 'Waleed Ahmed',
+  //     email: 'waleed.ahmed@foodiego.com',
+  //     phone: '+1 (555) 012-3456',
+  //     avatar:
+  //         'http://localhost:3845/assets/974fe84cc68cbc4839607d5f67a91ae17be70761.png',
+  //     addresses: [
+  //       AddressModel(
+  //         id: '1',
+  //         title: 'Home',
+  //         addressLine: '123 Orange Street, Heliopolis, Cairo',
+  //         isDefault: true,
+  //       ),
+  //       AddressModel(
+  //         id: '2',
+  //         title: 'Work',
+  //         addressLine: 'Smart Village, Building B-12, Giza',
+  //         isDefault: false,
+  //       ),
+  //     ],
+  //   );
+  // }
 
   @override
   List<Object?> get props => [id, email, name, avatar, phone, addresses];

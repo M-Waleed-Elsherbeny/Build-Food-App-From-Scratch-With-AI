@@ -26,7 +26,7 @@ abstract class AuthRepository {
   /// Logs out the current user.
   Future<Either<Failure, void>> logout();
 
-  // /// Checks if the user is currently authenticated.
-  // Future<bool> isAuthenticated();
+  /// Checks if the user is currently authenticated.
+  Future<bool> isAuthenticated();
 }
 

@@ -27,12 +27,12 @@ class _AuthGuardState extends State<AuthGuard> {
     final repository = getIt<AuthRepository>();
     final isAuthenticated = await repository.isAuthenticated();
 
-    if (!mounted) return;
+    // if (!mounted) return;
 
-    if (!isAuthenticated) {
-      context.go(AppRoutes.welcome);
-      return;
-    }
+    // if (!isAuthenticated) {
+    //   context.go(AppRoutes.welcome);
+    //   return;
+    // }
 
     setState(() {
       _isAuthenticated = true;

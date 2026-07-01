@@ -110,6 +110,16 @@ class AuthRepositoryImpl implements AuthRepository {
     }
   }
 
+  @override
+  Future<bool> isAuthenticated() async {
+    try {
+      final user = await _storage.read(key: AppConstants.userSessionKey);
+      return user != null;
+    } catch (_) {
+      return false;
+    }
+  }
+
   // @override
   // Future<bool> isAuthenticated() async {
   //   return _sessionManager.isAuthenticatedAsync();

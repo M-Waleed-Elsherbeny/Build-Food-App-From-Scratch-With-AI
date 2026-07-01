@@ -2,7 +2,6 @@ import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import '../services/session_manager.dart';
 import '../../features/onboarding/data/datasources/onboarding_local_datasource.dart';
 import '../../features/onboarding/data/repositories/onboarding_repository.dart';
 import '../../features/onboarding/presentation/cubit/onboarding_cubit.dart';
@@ -74,9 +73,9 @@ Future<void> configureDependencies() async {
   final SupabaseClient supabaseClient = Supabase.instance.client;
 
   getIt.registerSingleton<SupabaseClient>(supabaseClient);
-  getIt.registerLazySingleton<SessionManager>(
-    () => SessionManager(supabaseClient),
-  );
+  // getIt.registerLazySingleton<SessionManager>(
+  //   () => SessionManager(supabaseClient),
+  // );
   getIt.registerLazySingleton<SupabaseAuthDatasource>(
     () => SupabaseAuthDatasource(supabaseClient),
   );
